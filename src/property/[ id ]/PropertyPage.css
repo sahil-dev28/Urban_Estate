@@ -1,0 +1,90 @@
+.property-page {
+  display: flex;
+  height: 100%;
+}
+
+.property-details {
+  flex: 3;
+}
+
+.property-features {
+  flex: 2;
+  background-color: #fcf5f3;
+  padding: 5px;
+}
+
+.property-title {
+  font-weight: 500;
+  font-size: 2rem;
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+.property-location {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #888;
+  font-size: 14px;
+}
+.property-location img {
+  width: 16px;
+  height: 16px;
+}
+.property-price {
+  margin-top: 10px;
+  padding: 5px;
+  background-color: rgba(254, 205, 81, 0.438);
+  border-radius: 5px;
+  width: max-content;
+  font-size: 18px;
+  font-weight: 300;
+}
+.property-description {
+  margin-top: 40px;
+  color: #555;
+  line-height: 20px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.property-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 0;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+  width: fit-content;
+}
+
+.statusText {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.featureText {
+  padding: 10px 0;
+}

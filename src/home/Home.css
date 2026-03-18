@@ -1,0 +1,50 @@
+.home-page {
+  display: flex;
+  height: 100%;
+}
+
+h1.title {
+  font-size: 64px;
+  font-weight: 500;
+}
+
+.text-container {
+  flex: 3;
+  display: flex;
+}
+
+.wrapper {
+  padding-right: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+  height: 100%;
+}
+
+.boxes {
+  padding-right: 100px;
+}
+
+.boxes h1 {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.boxes h2 {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.image-container {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.image-container img {
+  max-width: 115%;
+  position: absolute;
+  right: 0;
+}

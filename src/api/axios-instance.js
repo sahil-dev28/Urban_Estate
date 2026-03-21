@@ -26,9 +26,10 @@ api.interceptors.response.use(
       switch (status) {
         case 401: {
           toast.error("Unauthorized", {
-            description:
-              errorMessage ?? "You are not authorized to access this resource.",
+            description: errorMessage ?? "Session expired. Please login again.",
           });
+          localStorage.clear();
+          window.location.href = "/auth/login";
           break;
         }
         case 403: {
@@ -63,7 +64,7 @@ api.interceptors.response.use(
       }
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

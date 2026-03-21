@@ -1,4 +1,4 @@
-/* Search.css */
+/* Search.css
 
 .type button {
   padding: 16px 36px;
@@ -53,4 +53,56 @@
 .search-btn img {
   width: 24px;
   height: 24px;
+} */
+
+.searchBar {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.type {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.type-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.type-btn.active {
+  background: #000;
+  color: #fff;
+}
+
+.search-form {
+  display: flex;
+  gap: 10px;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.search-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.search-btn {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }

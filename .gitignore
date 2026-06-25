@@ -31,3 +31,7 @@ tmp
 .env.test.local
 .env.production.local
 .env
+
+# Claude Code
+.claude/
+.playwright-mcp/

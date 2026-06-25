@@ -1,5 +1,6 @@
 import "../../../components/application/ApplicationList";
 
+import { useSearchParams } from "react-router-dom";
 import Filter from "../../../components/filter/Filter";
 import useGetUserPropertiesQuery from "../../../hooks/properties/useGetUserPropertiesQuery";
 import UserPropertyCard from "../../../components/property/UserPropertyCard";
@@ -13,8 +14,11 @@ export default function UserPropertiesList() {
   const [currentEditProperty, setCurrentEditProperty] = useState({});
   const [showPropertyForm, setShowPropertyForm] = useState(false);
 
+  const [searchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams.entries());
+
   const { userProperty, isLoading, isError, error } =
-    useGetUserPropertiesQuery();
+    useGetUserPropertiesQuery(params);
 
   const { isLoading: createPropertyIsLoading } = useCreatePropertyMutation();
   const { isLoading: updatePropertyIsUpdating } = useUpdatePropertyMutation();
@@ -22,7 +26,6 @@ export default function UserPropertiesList() {
   const editPropertyHandler = (property) => {
     setCurrentEditProperty(property);
     setShowPropertyForm(true);
-    console.log(property);
   };
   const togglePropertyForm = (state) => {
     setCurrentEditProperty({});

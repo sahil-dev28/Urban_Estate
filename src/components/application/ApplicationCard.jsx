@@ -35,7 +35,7 @@ function ApplicationCard(props) {
         </p>
         <p className="price">
           {application?.property.price
-            ? " $ " + application.property.price
+            ? "₹ " + application.property.price.toLocaleString("en-IN")
             : "Price not mentioned"}
         </p>
         <div className="bottom">

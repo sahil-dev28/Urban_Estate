@@ -3,11 +3,11 @@ import { toast } from "sonner";
 
 import api from "../../api/axios-instance";
 
-export default function useProperties() {
+export default function useProperties(params = {}) {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["properties"],
+    queryKey: ["properties", params],
     queryFn: async () => {
-      const response = await api.get("/property");
+      const response = await api.get("/property", { params });
       return response.data.results;
     },
 

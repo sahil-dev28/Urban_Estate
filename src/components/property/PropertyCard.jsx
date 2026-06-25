@@ -12,12 +12,11 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 
 function PropertyCard({ property }) {
-  console.log(property);
   return (
     <Card className="w-full overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200">
       <div className="h-[180px] w-full overflow-hidden">
         <img
-          className="h-fu ll w-full object-cover"
+          className="h-full w-full object-cover"
           src={property.propertyImage}
           alt={property.name}
         />
@@ -44,7 +43,7 @@ function PropertyCard({ property }) {
 
         <p className="text-sm text-muted-foreground">
           <span className="font-semibold">
-            {property.price ? property.price : "Price not mentioned"} |
+            {property.price ? "₹ " + property.price.toLocaleString("en-IN") : "Price not mentioned"} |
             {property.carpetArea
               ? `${property.carpetArea} sq.ft.`
               : "Carpet area not mentioned"}

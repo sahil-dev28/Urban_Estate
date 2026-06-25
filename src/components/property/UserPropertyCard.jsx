@@ -58,7 +58,7 @@ function UserPropertyCard(props) {
         <div>
           <p className="price">
             {userProperty?.price
-              ? " $ " + userProperty.price
+              ? "₹ " + userProperty.price.toLocaleString("en-IN")
               : "Price not mentioned"}
           </p>
         </div>

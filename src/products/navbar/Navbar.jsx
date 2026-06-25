@@ -10,7 +10,6 @@ export default function Navbar() {
   const role = useAuthStore((state) => state.role);
 
   const { data } = useShowMeQuery();
-  console.log(data);
 
   return (
     <nav>
@@ -31,7 +30,7 @@ export default function Navbar() {
       {isLoggedIn ? (
         <div className="right">
           <div className="user">
-            <img src={profile} />
+            <img src={data?.profileImage || profile} alt={data?.name} />
           </div>
           <span className="user-info">{data?.name}</span>
           <Link to="/profile" className="profile-link">

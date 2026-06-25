@@ -1,113 +1,128 @@
+import { Search } from "lucide-react";
 import "./Filter.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 function Filter() {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const [query, setQuery] = useState({
-    type: searchParams.get("type") || "",
-    city: searchParams.get("city") || "",
-    property: searchParams.get("property") || "",
+    search: searchParams.get("search") || "",
+    furnishStatus: searchParams.get("furnishStatus") || "",
+    status: searchParams.get("status") || "",
     minPrice: searchParams.get("minPrice") || "",
     maxPrice: searchParams.get("maxPrice") || "",
-    sort: searchParams.get("bedroom") || "",
+    sort: searchParams.get("sort") || "",
   });
 
-  const handleChange = (e) => {
+  useEffect(() => {
     setQuery({
-      ...query,
-      [e.target.name]: e.target.value,
+      search: searchParams.get("search") || "",
+      furnishStatus: searchParams.get("furnishStatus") || "",
+      status: searchParams.get("status") || "",
+      minPrice: searchParams.get("minPrice") || "",
+      maxPrice: searchParams.get("maxPrice") || "",
+      sort: searchParams.get("sort") || "",
     });
+  }, [searchParams]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setQuery((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleFilter = () => {
-    setSearchParams(query);
+    const cleanedQuery = Object.fromEntries(
+      Object.entries(query).filter(([, value]) => value !== ""),
+    );
+    setSearchParams(cleanedQuery);
   };
 
   return (
     <div className="filter">
       <h1>
-        Search results for <b>{searchParams.get("city")}</b>
+        Search results for{" "}
+        <b>{searchParams.get("search") || "all locations"}</b>
       </h1>
+
+      {/* Top Search */}
       <div className="top">
-        <div className="item">
-          <label htmlFor="city">Search</label>
+        <div className="item full">
+          <label>Search</label>
           <input
             type="text"
-            id="city"
-            name="city"
-            placeholder="Property name or location"
+            name="search"
+            placeholder="Search location or property..."
+            value={query.search}
             onChange={handleChange}
-            defaultValue={query.city}
           />
         </div>
       </div>
+
+      <div className="filter-divider" />
+
+      {/* Filters */}
       <div className="bottom">
         <div className="item">
-          <label htmlFor="type">Furniture Status</label>
+          <label>Furniture</label>
           <select
-            name="type"
-            id="type"
+            name="furnishStatus"
+            value={query.furnishStatus}
             onChange={handleChange}
-            defaultValue={query.type}
           >
-            <option value="">any</option>
-            <option value="buy">Furnished</option>
-            <option value="rent">Unfurnished</option>
+            <option value="">Any</option>
+            <option value="furnished">Furnished</option>
+            <option value="unfurnished">Unfurnished</option>
           </select>
         </div>
+
         <div className="item">
-          <label htmlFor="property">Status</label>
-          <select
-            name="property"
-            id="property"
-            onChange={handleChange}
-            defaultValue={query.property}
-          >
-            <option value="">any</option>
-            <option value="apartment">Open</option>
-            <option value="house">Closed</option>
+          <label>Status</label>
+          <select name="status" value={query.status} onChange={handleChange}>
+            <option value="">Any</option>
+            <option value="open">Open</option>
+            <option value="closed">Closed</option>
           </select>
         </div>
+
         <div className="item">
-          <label htmlFor="minPrice">Min Price</label>
+          <label>Min Price</label>
           <input
             type="number"
-            id="minPrice"
             name="minPrice"
-            placeholder="any"
+            placeholder="₹0"
+            value={query.minPrice}
             onChange={handleChange}
-            defaultValue={query.minPrice}
           />
         </div>
+
         <div className="item">
-          <label htmlFor="maxPrice">Max Price</label>
+          <label>Max Price</label>
           <input
-            type="text"
-            id="maxPrice"
+            type="number"
             name="maxPrice"
-            placeholder="any"
+            placeholder="₹10,00,000"
+            value={query.maxPrice}
             onChange={handleChange}
-            defaultValue={query.maxPrice}
           />
         </div>
+
         <div className="item">
-          <label htmlFor="bedroom">Sort by</label>
-          <select
-            name="sort"
-            id="sort"
-            onChange={handleChange}
-            defaultValue={query.property}
-          >
-            <option value="">any</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="date-asc">Date: Oldest First</option>
-            <option value="date-desc">Date: Newest First</option>
+          <label>Sort By</label>
+          <select name="sort" value={query.sort} onChange={handleChange}>
+            <option value="">Default</option>
+            <option value="lowest">Price ↑</option>
+            <option value="highest">Price ↓</option>
+            <option value="oldest">Oldest</option>
+            <option value="latest">Newest</option>
           </select>
         </div>
-        <button onClick={handleFilter}>
-          <img src="/search.png" alt="" />
+
+        <button className="search-btn" onClick={handleFilter}>
+          <Search size={18} />
         </button>
       </div>
     </div>

@@ -1,12 +1,12 @@
+import { useSearchParams } from "react-router-dom";
 import useProperties from "../../hooks/properties/useProperties";
 import Filter from "../filter/Filter";
 import PropertyCard from "./PropertyCard";
-import PropertyFilterCard from "./PropertyFilterCard";
 
 export default function PropertyList() {
-  const { property, isLoading, isError, error } = useProperties();
-
-  console.log(property);
+  const [searchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams.entries());
+  const { property, isLoading, isError, error } = useProperties(params);
 
   if (isLoading) {
     return (

@@ -60,15 +60,17 @@
 // }
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Search.css";
 import { Search } from "lucide-react";
 
 const types = ["buy", "rent"];
 
 export default function SearchBar() {
+  const navigate = useNavigate();
   const [query, setQuery] = useState({
     type: "buy",
-    location: "",
+    search: "",
     minPrice: "",
     maxPrice: "",
   });
@@ -87,13 +89,13 @@ export default function SearchBar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // You can replace this with navigation or API call
-    console.log("Search Query:", query);
-
-    // Example: redirect
-    const params = new URLSearchParams(query).toString();
-    window.location.href = `/search?${params}`;
+    const params = new URLSearchParams(
+      Object.fromEntries(
+        Object.entries({ search: query.search, minPrice: query.minPrice, maxPrice: query.maxPrice })
+          .filter(([, v]) => v !== ""),
+      ),
+    ).toString();
+    navigate(`/property${params ? `?${params}` : ""}`);
   };
 
   return (
@@ -116,9 +118,9 @@ export default function SearchBar() {
       <form className="search-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          name="location"
+          name="search"
           placeholder="Enter city (e.g. Mumbai)"
-          value={query.location}
+          value={query.search}
           onChange={handleChange}
         />
 

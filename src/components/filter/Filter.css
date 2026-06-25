@@ -1,55 +1,117 @@
 .filter {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
+}
 
-  h1 {
-    font-weight: 300;
-    font-size: 24px;
-  }
+.filter h1 {
+  font-weight: 400;
+  font-size: 20px;
+  color: #111;
+}
 
-  .item {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+.filter h1 b {
+  font-weight: 700;
+}
 
-    label {
-      font-size: 10px;
-    }
+/* Search row — full width inside the card */
+.top {
+  width: 100%;
+}
 
-    input,
-    select {
-      width: 100px;
-      padding: 10px;
-      border: 1px solid #e0e0e0;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-  }
+.top .item.full {
+  width: 100%;
+}
 
-  .top {
-    input {
-      width: 100%;
-    }
-  }
+.top .item.full input {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
 
-  .bottom {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
+.top .item.full input:focus {
+  border-color: #111;
+  outline: none;
+}
 
-    button {
-      width: 100px;
-      padding: 10px;
-      border: none;
-      cursor: pointer;
-      background-color: #fece51;
+/* Divider between search and filters */
+.filter-divider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 0 -4px;
+}
 
-      img {
-        width: 24px;
-        height: 24px;
-      }
-    }
-  }
+/* Filter row */
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.item input,
+.item select {
+  height: 40px;
+  min-width: 120px;
+  padding: 0 10px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  background: #fafafa;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.item input:focus,
+.item select:focus {
+  border-color: #111;
+  background: #fff;
+  outline: none;
+}
+
+.search-btn {
+  height: 40px;
+  width: 40px;
+  border: none;
+  background: #fece51;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.2s, transform 0.1s;
+  flex-shrink: 0;
+}
+
+.search-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.search-btn:hover {
+  background: #f5c400;
+  transform: scale(1.05);
 }

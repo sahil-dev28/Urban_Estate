@@ -8,8 +8,6 @@ import Map from "../map/Map";
 export default function ApplicationList() {
   const { application, isLoading, isError, error } = useGetUserApplication();
 
-  console.log(application);
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">

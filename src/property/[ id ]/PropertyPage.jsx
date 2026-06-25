@@ -23,7 +23,6 @@ import PropertyLoading from "./PropertyLoading";
 export default function PropertyPage() {
   const { id } = useParams();
   const { property, isLoading, error } = useSinglePropertyPage({ id });
-  console.log("Property Data:", property);
 
   if (isLoading) {
     return <PropertyLoading />;
@@ -72,7 +71,9 @@ export default function PropertyPage() {
           <span>{property?.location}</span>
         </div>
         <div className="property-price">
-          {property?.price ? property.price : "Price not mentioned "}
+          {property?.price
+            ? "₹ " + property.price.toLocaleString("en-IN")
+            : "Price not mentioned"}
         </div>
         <div className="property-description">{property?.description}</div>
       </div>
@@ -110,7 +111,7 @@ export default function PropertyPage() {
                 )}
 
                 <Badge className="bg-green-600 hover:bg-green-600 capitalize">
-                  {`${property.applications.length} tenant applied`}
+                  {`${property.applications.length} tenant${property.applications.length !== 1 ? "s" : ""} applied`}
                 </Badge>
               </div>
             </CardTitle>

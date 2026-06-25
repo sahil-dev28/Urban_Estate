@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import api from "../../api/axios-instance";
 import { toast } from "sonner";
 
-export default function useGetUserPropertiesQuery() {
+export default function useGetUserPropertiesQuery(params = {}) {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["user-property"],
+    queryKey: ["user-property", params],
     queryFn: async () => {
-      const response = await api.get("/property/my");
+      const response = await api.get("/property/my", { params });
       return response.data.results;
     },
     onSuccess: (data) => {

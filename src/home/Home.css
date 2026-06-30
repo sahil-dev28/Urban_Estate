@@ -48,3 +48,61 @@ h1.title {
   position: absolute;
   right: 0;
 }
+
+@media (max-width: 1024px) {
+  h1.title {
+    font-size: 48px;
+  }
+
+  .wrapper {
+    padding-right: 40px;
+  }
+
+  .boxes {
+    padding-right: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page {
+    flex-direction: column;
+    height: auto;
+    gap: 24px;
+  }
+
+  h1.title {
+    font-size: 34px;
+  }
+
+  .wrapper {
+    padding-right: 0;
+    gap: 24px;
+    height: auto;
+    padding-top: 24px;
+  }
+
+  .boxes {
+    padding-right: 0;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .boxes h1 {
+    font-size: 28px;
+  }
+
+  .boxes h2 {
+    font-size: 16px;
+  }
+
+  .image-container {
+    flex: none;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .image-container img {
+    position: static;
+    max-width: 100%;
+  }
+}

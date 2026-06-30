@@ -23,3 +23,26 @@
   height: 100%;
   background-color: #fcf5f3;
 }
+
+@media (max-width: 900px) {
+  .listPage {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .listContainer {
+    height: auto;
+  }
+
+  .listWrapper {
+    height: auto;
+    padding-right: 0;
+    gap: 30px;
+    overflow-y: visible;
+    padding-bottom: 30px;
+  }
+
+  .mapContainer {
+    display: none;
+  }
+}

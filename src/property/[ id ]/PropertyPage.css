@@ -88,3 +88,19 @@
 .featureText {
   padding: 10px 0;
 }
+
+@media (max-width: 767px) {
+  .property-page {
+    height: auto;
+  }
+
+  .property-details,
+  .property-features {
+    flex: none;
+    width: 100%;
+  }
+
+  .property-title {
+    font-size: 1.6rem;
+  }
+}

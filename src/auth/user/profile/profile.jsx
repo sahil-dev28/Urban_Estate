@@ -90,7 +90,7 @@ const ProfilePage = () => {
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="p-6 bg-white rounded-lg shadow-md w-[350px] md:w-[450px]"
+          className="p-6 bg-white rounded-lg shadow-md w-full max-w-[350px] md:max-w-[450px]"
         >
           <h1 className="flex items-center justify-between text-2xl mb-6 font-bold">
             My Profile

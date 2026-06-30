@@ -1,3 +1,24 @@
+@media (max-width: 600px) {
+  .card {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card .imageContainer {
+    flex: none;
+    height: 200px;
+  }
+
+  .card .textContainer .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card .textContainer .bottom .features {
+    flex-wrap: wrap;
+  }
+}
+
 .card {
   display: flex;
   gap: 20px;

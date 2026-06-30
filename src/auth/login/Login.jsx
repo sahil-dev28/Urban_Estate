@@ -40,8 +40,8 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
     shouldUseNativeValidation: true,
     defaultValues: {
-      email: email ?? "",
-      password: "",
+      email: email ?? "sahilkolge28@gmail.com",
+      password: "Test@123",
       role: "",
     },
   });

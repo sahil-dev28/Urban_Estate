@@ -1,6 +1,6 @@
 import "./PropertyPage.css";
 import profilejpg from "../../../src/assets/noavatar.jpg";
-// import location from "../../../src/assets/pin.png";
+import { Mail, MapPin, Ruler, Sofa, Users } from "lucide-react";
 
 import {
   Card,
@@ -29,22 +29,18 @@ export default function PropertyPage() {
   }
 
   if (error) {
-    let error = {
-      message: `Something's went wrong!`,
-    };
-    if (error.data?.msg) {
-      error.message = error.data.msg;
-    }
+    const message = error.response?.data?.msg || "Something went wrong!";
+
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center min-h-[60vh]">
         <Card className="w-96">
           <CardHeader>
             <CardTitle>Error</CardTitle>
-            <CardDescription>{error.message}</CardDescription>
+            <CardDescription>{message}</CardDescription>
           </CardHeader>
           <CardFooter>
             <Button asChild>
-              <Link to="/">Go Back</Link>
+              <Link to="/property">Back to properties</Link>
             </Button>
           </CardFooter>
         </Card>
@@ -52,99 +48,119 @@ export default function PropertyPage() {
     );
   }
 
-  return (
-    <section className="property-page flex flex-col md:flex-row gap-4">
-      <div className="property-details">
-        <Avatar className="w-full h-[200px] md:h-[300px] lg:h-[400px] rounded-none">
-          <AvatarImage
-            className="object-cover"
-            src={property?.propertyImage || profilejpg}
-            alt="Property Image"
-          />
-          <AvatarFallback className="rounded-none text-4xl uppercase">
-            PI
-          </AvatarFallback>
-        </Avatar>
-        <p className="property-title">{property?.name}</p>
-        <div className="property-location">
-          {/* <img src={location} alt="logo" /> */}
-          <span>{property?.location}</span>
-        </div>
-        <div className="property-price">
-          {property?.price
-            ? "₹ " + property.price.toLocaleString("en-IN")
-            : "Price not mentioned"}
-        </div>
-        <div className="property-description">{property?.description}</div>
-      </div>
-      <div className="property-features">
-        <div className="property-wrapper">
-          <p className="title">Status</p>
-          <div className="status">
-            <div className="feature">
-              <div className="statusText">
-                <span>{property?.status}</span>
-              </div>
-            </div>
-            <div className="feature">
-              <div className="statusText">
-                <span>{property?.furnishStatus}</span>
-              </div>
-            </div>
-          </div>
-          <p className="title">Carpet Area</p>
-          <div className="status">
-            <div className="featureText">
-              <span>
-                {property?.carpetArea
-                  ? property.carpetArea + " sq.ft."
-                  : "Carpet area not mentioned"}
-              </span>
-            </div>
-          </div>
-          <CardHeader className="mt-5 pl-1">
-            <CardTitle className="text-xl font-semibold flex items-center justify-between">
-              Owner Profile
-              <div className="flex items-center gap-2">
-                {property.owned && (
-                  <Badge className="capitalize">Owned by you</Badge>
-                )}
+  const applicationsCount = property.applications.length;
 
-                <Badge className="bg-green-600 hover:bg-green-600 capitalize">
-                  {`${property.applications.length} tenant${property.applications.length !== 1 ? "s" : ""} applied`}
-                </Badge>
-              </div>
-            </CardTitle>
-            <Avatar className="m-auto mt-5 w-[200px] h-[200px]">
+  return (
+    <section className="property-page">
+      <div className="property-details">
+        <div className="property-hero">
+          <img src={property.propertyImage || profilejpg} alt={property.name} />
+        </div>
+
+        <div className="property-heading">
+          <div>
+            <h1 className="property-title">{property.name}</h1>
+            <p className="property-location">
+              <MapPin className="h-4 w-4" />
+              <span>{property.location}</span>
+            </p>
+          </div>
+          <div className="property-price">
+            {property.price
+              ? "₹ " + property.price.toLocaleString("en-IN")
+              : "Price on request"}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          <Badge
+            className={`text-white capitalize ${
+              property.status === "open" ? "bg-green-600" : "bg-red-600"
+            }`}
+          >
+            {property.status}
+          </Badge>
+          <Badge variant="secondary" className="capitalize">
+            {property.furnishStatus}
+          </Badge>
+        </div>
+
+        <div className="property-info-grid">
+          <div className="property-info">
+            <Ruler />
+            <div>
+              <span>Carpet Area</span>
+              <strong>
+                {property.carpetArea
+                  ? property.carpetArea + " sq.ft."
+                  : "Not mentioned"}
+              </strong>
+            </div>
+          </div>
+          <div className="property-info">
+            <Sofa />
+            <div>
+              <span>Furnishing</span>
+              <strong className="capitalize">{property.furnishStatus}</strong>
+            </div>
+          </div>
+          <div className="property-info">
+            <Users />
+            <div>
+              <span>Applications</span>
+              <strong>{applicationsCount}</strong>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 className="property-section-title">About this property</h2>
+          <p className="property-description">{property.description}</p>
+        </div>
+      </div>
+
+      <aside className="property-features">
+        <Card className="property-owner-card">
+          <CardHeader className="text-center">
+            <Avatar className="mx-auto h-24 w-24">
               <AvatarImage
                 className="object-cover"
                 src={property.landlord.profileImage}
                 alt={`@${property.landlord.name}`}
               />
-              <AvatarFallback className="text-4xl bg-white">
+              <AvatarFallback className="bg-[var(--cream)] text-3xl">
                 {property.landlord.name.charAt().toUpperCase()}
               </AvatarFallback>
             </Avatar>
+            <CardTitle className="mt-3 text-lg">
+              {property.landlord.name}
+            </CardTitle>
+            <CardDescription>Property Owner</CardDescription>
+            {property.owned && (
+              <Badge className="mx-auto mt-1">Owned by you</Badge>
+            )}
           </CardHeader>
 
-          <CardContent>
-            <div className="flex flex-col space-y-1.5">
-              <span className="font-semibold">Contact:</span>
-              <Link href={`mailto:${property.landlord.email}`}>
-                {property.landlord.email}
-              </Link>
-            </div>
+          <CardContent className="space-y-3">
+            <a
+              href={`mailto:${property.landlord.email}`}
+              className="property-contact"
+            >
+              <Mail className="h-4 w-4 shrink-0" />
+              <span>{property.landlord.email}</span>
+            </a>
+            <p className="text-center text-sm text-gray-500">
+              {`${applicationsCount} tenant${applicationsCount !== 1 ? "s" : ""} applied`}
+            </p>
           </CardContent>
+
           {!property.owned && (
-            <CardFooter className="grid gap-4">
-              <BookPropertyButton
-                isSubmitted={property.isApplicationSubmitted}
-                propertyId={property._id}
-              />
+            <CardFooter>
+              <BookPropertyButton />
             </CardFooter>
           )}
-        </div>
-      </div>
+        </Card>
+      </aside>
     </section>
   );
 }

@@ -1,6 +1,6 @@
 import "./Navbar.css";
 import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import profile from "../../assets/noavatar.jpg";
 import { useShowMeQuery } from "../../hooks/user/useShowMeQuery";
 import { useAuthStore } from "../../store/authStore";
@@ -15,6 +15,9 @@ export default function Navbar() {
   const { data } = useShowMeQuery();
 
   const closeMenu = () => setMenuOpen(false);
+
+  const navLinkClass = ({ isActive }) =>
+    isActive ? "nav-link active" : "nav-link";
 
   return (
     <nav>
@@ -36,21 +39,34 @@ export default function Navbar() {
 
       <div className={`nav-links ${menuOpen ? "open" : ""}`}>
         <div className="left">
-          <Link to="/" onClick={closeMenu}>
+          <NavLink to="/" end className={navLinkClass} onClick={closeMenu}>
             Home
-          </Link>
-          <Link to="/property" onClick={closeMenu}>
+          </NavLink>
+          <NavLink
+            to="/property"
+            end
+            className={navLinkClass}
+            onClick={closeMenu}
+          >
             Properties
-          </Link>
+          </NavLink>
           {isLoggedIn && role === "landlord" && (
-            <Link to="/property/my" onClick={closeMenu}>
+            <NavLink
+              to="/property/my"
+              className={navLinkClass}
+              onClick={closeMenu}
+            >
               My Properties
-            </Link>
+            </NavLink>
           )}
           {isLoggedIn && role === "tenant" && (
-            <Link to="/application" onClick={closeMenu}>
+            <NavLink
+              to="/application"
+              className={navLinkClass}
+              onClick={closeMenu}
+            >
               My Applications
-            </Link>
+            </NavLink>
           )}
         </div>
         {isLoggedIn ? (

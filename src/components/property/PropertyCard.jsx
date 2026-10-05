@@ -1,66 +1,58 @@
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { MapPin, Ruler } from "lucide-react";
 
 import { Link } from "react-router";
+import "./PropertyCard.css";
 
 function PropertyCard({ property }) {
   return (
-    <Card className="w-full overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200">
-      <div className="h-[180px] w-full overflow-hidden">
-        <img
-          className="h-full w-full object-cover"
-          src={property.propertyImage}
-          alt={property.name}
-        />
-      </div>
-
-      <CardHeader className="space-y-2">
-        <CardTitle className="text-lg font-semibold">{property.name}</CardTitle>
-
-        <div className="flex flex-wrap gap-2">
-          <Badge variant="outline" className="capitalize">
-            {property.location}
-          </Badge>
+    <Link to={`/property/${property._id}`} className="property-card-link">
+      <Card className="property-card h-full gap-0 overflow-hidden py-0">
+        <div className="property-card-image">
+          <img src={property.propertyImage} alt={property.name} />
           <Badge
-            className={`text-white capitalize ${
+            className={`property-card-status text-white capitalize ${
               property.status === "open" ? "bg-green-600" : "bg-red-600"
             }`}
           >
             {property.status}
           </Badge>
-          <Badge variant="secondary" className="capitalize">
-            {property.furnishStatus}
-          </Badge>
         </div>
 
-        <p className="text-sm text-muted-foreground">
-          <span className="font-semibold">
-            {property.price ? "₹ " + property.price.toLocaleString("en-IN") : "Price not mentioned"} |
-            {property.carpetArea
-              ? `${property.carpetArea} sq.ft.`
-              : "Carpet area not mentioned"}
-          </span>
-        </p>
+        <div className="flex flex-1 flex-col gap-3 p-4">
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="line-clamp-1 text-base font-semibold">
+              {property.name}
+            </h3>
+            <Badge variant="secondary" className="capitalize">
+              {property.furnishStatus}
+            </Badge>
+          </div>
 
-        <CardDescription className="line-clamp-2">
-          {property.description}
-        </CardDescription>
-      </CardHeader>
+          <p className="flex items-center gap-1 text-sm text-gray-500 capitalize">
+            <MapPin className="h-4 w-4 shrink-0" />
+            <span className="line-clamp-1">{property.location}</span>
+          </p>
 
-      <CardFooter>
-        <Button variant="outline" className="w-full" asChild>
-          <Link to={`/property/${property._id}`}>View Details</Link>
-        </Button>
-      </CardFooter>
-    </Card>
+          <p className="line-clamp-2 text-sm text-gray-500">
+            {property.description}
+          </p>
+
+          <div className="mt-auto flex items-center justify-between pt-2">
+            <span className="property-card-price">
+              {property.price
+                ? "₹ " + property.price.toLocaleString("en-IN")
+                : "Price on request"}
+            </span>
+            <span className="flex items-center gap-1 text-sm text-gray-500">
+              <Ruler className="h-4 w-4" />
+              {property.carpetArea ? `${property.carpetArea} sq.ft.` : "—"}
+            </span>
+          </div>
+        </div>
+      </Card>
+    </Link>
   );
 }
 

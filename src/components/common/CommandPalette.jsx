@@ -30,11 +30,6 @@ import { useLogoutUser } from "../../hooks/auth/userLogoutUser";
 import { useAuthStore } from "../../store/authStore";
 import { DEMO_ACCOUNT } from "../../utils/default";
 
-const isMac =
-  typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform);
-
-export const shortcutLabel = isMac ? "⌘K" : "Ctrl K";
-
 function useDebouncedValue(value, delay) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {

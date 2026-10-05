@@ -7,9 +7,8 @@ import { useAuthStore } from "../../store/authStore";
 import { useState } from "react";
 import { Menu, Search, X } from "lucide-react";
 import ThemeToggle from "../../components/common/ThemeToggle";
-import CommandPalette, {
-  shortcutLabel,
-} from "../../components/common/CommandPalette";
+import CommandPalette from "../../components/common/CommandPalette";
+import { shortcutLabel } from "../../lib/shortcut";
 
 export default function Navbar() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);

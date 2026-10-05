@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import api from "../../api/axios-instance";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { queryClient } from "../../main";
 
 export const updateProperty = async ({ id, details }) => {
@@ -14,9 +14,6 @@ export const useUpdatePropertyMutation = () => {
     onSuccess: (data) => {
       toast.success(data.msg || "Property updated successfully");
       queryClient.invalidateQueries({ queryKey: ["user-property"] });
-    },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to update property");
     },
   });
 };

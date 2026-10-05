@@ -33,8 +33,5 @@ export const useProfileUpdate = () => {
       toast.success(data.msg);
       queryClient.invalidateQueries({ queryKey: ["showMe"] });
     },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Update failed");
-    },
   });
 };

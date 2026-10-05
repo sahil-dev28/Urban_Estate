@@ -1,6 +1,6 @@
 import { useAuthStore } from "../../store/authStore";
 import { useNavigate, useParams } from "react-router";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -18,40 +18,32 @@ function BookPropertyButton() {
 
   const {
     mutate: createApplication,
-    isLoading: createApplicationIsLoading,
+    isPending: createApplicationIsPending,
     isSuccess: createApplicationIsSuccess,
   } = useCreateApplicationMutation();
 
+  const isBooked = isSubmitted || createApplicationIsSuccess;
+
   const handleBookProperty = () => {
     if (!isLoggedIn) {
-      return navigate("auth/login");
+      return navigate("/auth/login");
     }
     if (role === "landlord") {
       return toast.error("Please login as a tenant to book a property");
     }
 
-    try {
-      createApplication({ id: propertyId });
-      toast.success("Property booked successfully");
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message || "Failed to book the property"
-      );
-    }
+    createApplication({ id: propertyId });
   };
 
   return (
     <Button
       type="button"
-      variant="default"
       onClick={handleBookProperty}
-      disabled={isSubmitted || createApplicationIsSuccess}
-      className="mt-4 bg-[#fccf5d] text-black rounded-md cursor-pointer w-full hover:scale-105 px-4 py-2 disabled:opacity-50"
+      disabled={isBooked || createApplicationIsPending}
+      className="w-full h-11 text-base font-semibold cursor-pointer hover:scale-105 disabled:opacity-50"
     >
-      {createApplicationIsLoading && (
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-      )}
-      {createApplicationIsSuccess || isSubmitted ? "Booked" : "Book Property"}
+      {createApplicationIsPending && <Loader2 className="h-4 w-4 animate-spin" />}
+      {isBooked ? "Booked" : "Book Property"}
     </Button>
   );
 }

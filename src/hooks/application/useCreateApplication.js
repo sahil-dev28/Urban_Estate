@@ -14,13 +14,8 @@ export const useCreateApplicationMutation = () => {
     mutationKey: ["createApplication"],
 
     onSuccess: (data) => {
-      toast.success(data?.msg);
+      toast.success(data?.msg || "Application submitted");
       queryClient.invalidateQueries({ queryKey: ["userApplication"] });
-    },
-    onError: (error) => {
-      toast.error(
-        error.response?.data?.message || "Failed to book the property"
-      );
     },
   });
 };

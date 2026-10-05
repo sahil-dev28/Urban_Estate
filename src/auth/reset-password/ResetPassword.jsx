@@ -50,15 +50,18 @@ const ResetPassword = () => {
   };
 
   return (
-    <section className="flex items-center justify-center h-screen bg-gray-100">
+    <section className="flex items-center justify-center min-h-[calc(100vh-100px)] py-10">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full max-w-md p-6 bg-white rounded-lg shadow-md"
+          className="w-full max-w-md p-6 bg-white rounded-xl border shadow-lg"
         >
           <h1 className="flex items-center justify-center text-2xl font-bold mb-4">
             Reset Password
           </h1>
+          <p className="text-center text-sm text-gray-600 mb-2">
+            Enter the code from your email and choose a new password.
+          </p>
           {!email && (
             <FormField
               control={form.control}
@@ -109,8 +112,7 @@ const ResetPassword = () => {
 
           <Button
             type="submit"
-            className="mt-4 bg-[#fccf5d] text-black rounded-md cursor-pointer w-full hover:scale-105"
-            variant="solid"
+            className="mt-6 w-full h-10 cursor-pointer hover:scale-105"
             disabled={isPending}
           >
             {isPending ? "Resetting..." : "Reset Password"}

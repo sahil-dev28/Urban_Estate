@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { useVerifyEmail } from "@/hooks/auth/useVerifyEmail";
 import { Link, useSearchParams } from "react-router";
 import { useNavigate } from "react-router";
+import Divider from "@/components/common/Divider";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
@@ -47,11 +48,11 @@ const VerifyEmail = () => {
   };
 
   return (
-    <section className="flex items-center justify-center h-screen bg-gray-100">
+    <section className="flex items-center justify-center min-h-[calc(100vh-100px)] py-10">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md"
+          className="w-full max-w-md mx-auto p-6 bg-white rounded-xl border shadow-lg"
         >
           <h1 className="text-2xl font-bold mb-4">Verify Your Email</h1>
           <p className="text-gray-600 mb-6">
@@ -79,7 +80,7 @@ const VerifyEmail = () => {
             control={form.control}
             name="verificationCode"
             render={({ field }) => (
-              <FormItem className>
+              <FormItem>
                 <FormLabel>Verification Code</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="Enter verification code" />
@@ -91,28 +92,23 @@ const VerifyEmail = () => {
 
           <Button
             type="submit"
-            className="mt-4 bg-[#fccf5d] text-black rounded-md cursor-pointer w-full hover:scale-105"
-            variant="solid"
+            className="mt-4 w-full h-10 cursor-pointer hover:scale-105"
             disabled={isPending}
           >
             {isPending ? "Verifying..." : "Verify Email"}
           </Button>
 
-          <div className="relative mt-7 text-center">
-            <span className="absolute inset-0 flex items-center justify-center">
-              <span className="w-full px-30 bg-white text-sm text-gray-600  border-t align-middle ">
-                OR
-              </span>
-            </span>
+          <div className="mt-6">
+            <Divider />
           </div>
-          <div className="mt-12 text-center text-sm text-gray-600">
+          <p className="mt-6 text-center text-sm text-gray-600">
             <Link
-              href="/auth/register"
-              className="text-blue-600 hover:underline"
+              to="/auth/register"
+              className="font-semibold text-black underline-offset-4 hover:underline"
             >
-              {"Go back to Sign Up"}
+              Go back to Sign Up
             </Link>
-          </div>
+          </p>
         </form>
       </Form>
     </section>

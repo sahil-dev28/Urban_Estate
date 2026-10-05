@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { useRegisterUser } from "../../hooks/auth/useRegister";
 import { Link, useNavigate } from "react-router";
+import Divider from "../../components/common/Divider";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -62,10 +63,10 @@ const RegisterForm = () => {
   };
 
   return (
-    <section className="flex items-center justify-center h-screen  bg-gray-100">
-      <Card className="w-full max-w-md p-6 bg-white shadow-lg">
+    <section className="flex items-center justify-center min-h-[calc(100vh-100px)] py-10">
+      <Card className="w-full max-w-md p-6 shadow-lg">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Register</CardTitle>
+          <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
           <CardDescription>
             Create a new account to get started.
           </CardDescription>
@@ -73,10 +74,10 @@ const RegisterForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
-                type="name"
+                type="text"
                 placeholder="Enter your name"
                 {...register("name")}
                 aria-invalid={errors.name ? "true" : "false"}
@@ -127,7 +128,7 @@ const RegisterForm = () => {
                 control={control}
                 render={({ field }) => (
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger id="role" className="w-full">
                       <SelectValue placeholder="Select your role" />
                     </SelectTrigger>
                     <SelectContent>
@@ -143,29 +144,25 @@ const RegisterForm = () => {
           <CardFooter className="flex justify-center align-middle">
             <CardAction className="flex flex-col items-center w-full">
               <Button
-                className="w-full  m-4 bg-[#fccf5d] text-black py-2 px-4 rounded-md hover:scale-105 cursor-pointer"
+                className="w-full h-10 cursor-pointer hover:scale-105"
                 type="submit"
-                variant="solid"
                 disabled={isPending}
               >
-                {isPending ? "Registering" : "Register"}
+                {isPending ? "Registering..." : "Register"}
               </Button>
 
-              <div className="relative mt-4 text-center">
-                <span className="absolute inset-0 flex items-center justify-center ">
-                  <span className="w-full px-30 bg-white text-sm text-gray-600  border-t align-middle ">
-                    OR
-                  </span>
-                </span>
+              <div className="mt-5 w-full">
+                <Divider />
               </div>
-              <div className="mt-9 text-center text-sm text-gray-600">
+              <p className="mt-5 text-center text-sm text-gray-600">
+                Already have an account?{" "}
                 <Link
                   to="/auth/login"
-                  className="text-blue-600 hover:underline"
+                  className="font-semibold text-black underline-offset-4 hover:underline"
                 >
-                  {"Already have an account? Log in"}
+                  Log in
                 </Link>
-              </div>
+              </p>
             </CardAction>
           </CardFooter>
         </form>

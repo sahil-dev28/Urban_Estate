@@ -17,6 +17,7 @@ import { forgetPasswordSchema } from "../../schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import Divider from "../../components/common/Divider";
 
 function ForgetPassword() {
   const navigate = useNavigate();
@@ -64,8 +65,8 @@ function ForgetPassword() {
   };
 
   return (
-    <section className="flex items-center justify-center h-screen bg-gray-100">
-      <Card className="w-full  max-w-md p-6 bg-white shadow-lg">
+    <section className="flex items-center justify-center min-h-[calc(100vh-100px)] py-10">
+      <Card className="w-full max-w-md p-6 shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">
             Reset Your Password
@@ -93,8 +94,7 @@ function ForgetPassword() {
             <CardAction className="flex flex-col items-center w-full">
               <Button
                 type="submit"
-                className="w-full  m-4 bg-[#fccf5d] text-black rounded-md hover:scale-105 cursor-pointer"
-                variant="solid"
+                className="w-full h-10 cursor-pointer hover:scale-105"
                 disabled={isPending}
               >
                 {isPending ? "Sending..." : "Send Reset Code"}
@@ -102,21 +102,15 @@ function ForgetPassword() {
             </CardAction>
           </CardFooter>
         </form>
-        <div className="relative mt-4 text-center">
-          <span className="absolute inset-0 flex items-center justify-center ">
-            <span className="w-full px-30 bg-white text-sm text-gray-600  border-t align-middle ">
-              OR
-            </span>
-          </span>
-        </div>
-        <div className="mt-2 text-center">
+        <Divider />
+        <p className="text-center text-sm">
           <Link
             to="/auth/login"
-            className="text-md text-blue-600 hover:underline"
+            className="font-semibold text-black underline-offset-4 hover:underline"
           >
             Go back to Login
           </Link>
-        </div>
+        </p>
       </Card>
     </section>
   );

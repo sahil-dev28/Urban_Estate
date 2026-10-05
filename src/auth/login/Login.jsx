@@ -19,6 +19,7 @@ import { Link, useSearchParams } from "react-router";
 import { useLoginUser } from "../../hooks/auth/useLogin";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "../../store/authStore";
+import Divider from "../../components/common/Divider";
 
 const Login = () => {
   const { isPending, mutateAsync: loginUser } = useLoginUser();
@@ -33,16 +34,14 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(loginSchema),
     shouldUseNativeValidation: true,
     defaultValues: {
-      email: email ?? "sahilkolge28@gmail.com",
-      password: "Test@123",
-      role: "",
+      email: email ?? "",
+      password: "",
     },
   });
 
@@ -64,20 +63,17 @@ const Login = () => {
 
       navigate({
         pathname: "/",
-        search: `?email=${data.email}`,
       });
-
-      console.log("It worked", data);
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
 
   return (
-    <section className="flex items-center justify-center h-screen bg-gray-100">
-      <Card className="w-full max-w-md p-6 bg-white shadow-lg">
+    <section className="flex items-center justify-center min-h-[calc(100vh-100px)] py-10">
+      <Card className="w-full max-w-md p-6 shadow-lg">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Login</CardTitle>
+          <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
           <CardDescription>
             Enter your credentials to access your account.
           </CardDescription>
@@ -100,7 +96,15 @@ const Login = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                <Link
+                  to="/auth/forgot-password"
+                  className="text-sm text-gray-600 underline-offset-4 hover:underline"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
               <Input
                 id="password"
                 type="password"
@@ -115,64 +119,26 @@ const Login = () => {
             </div>
           </CardContent>
 
-          <CardFooter className="flex-col gap-5 ">
+          <CardFooter className="flex-col gap-5">
             <Button
               type="submit"
-              className=" bg-[#fccf5d] text-black rounded-md cursor-pointer w-full hover:scale-105"
-              variant="solid"
+              className="w-full h-10 cursor-pointer hover:scale-105"
               disabled={isPending}
             >
               {isPending ? "Logging in..." : "Login"}
             </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setValue("role", "tenant")}
-              {...register("role", {
-                required: "Role is required",
-              })}
-              className="cursor-pointer w-full hover:scale-105"
-            >
-              Set Tenant
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setValue("role", "landlord")}
-              {...register("role", {
-                required: "Role is required",
-              })}
-              className="cursor-pointer w-full hover:scale-105"
-            >
-              Set Landlord
-            </Button>
 
-            <div className="relative mt-4 text-center">
-              <span className="absolute inset-0 flex items-center justify-center mt-4">
-                <span className="w-full px-30 bg-white text-sm text-gray-600  border-t align-middle ">
-                  OR
-                </span>
-              </span>
-            </div>
-            <div className=" text-center text-sm mt-6">
-              Don't have an account?
-              <div className="text-blue-600 hover:underline underline-offset-4">
-                <Link
-                  to="/auth/register"
-                  className="text-blue-600 text-sm hover:underline underline-offset-4"
-                >
-                  Sign Up
-                </Link>
-              </div>
-              <div className="text-sm mt-3 ">
-                <Link
-                  to="/auth/forgot-password"
-                  className="text-blue-600 hover:underline underline-offset-4"
-                >
-                  Forgot Password?
-                </Link>
-              </div>
-            </div>
+            <Divider />
+
+            <p className="text-center text-sm text-gray-600">
+              Don't have an account?{" "}
+              <Link
+                to="/auth/register"
+                className="font-semibold text-black underline-offset-4 hover:underline"
+              >
+                Sign Up
+              </Link>
+            </p>
           </CardFooter>
         </form>
       </Card>

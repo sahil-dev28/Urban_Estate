@@ -1,14 +1,16 @@
-import "../../../components/application/ApplicationList";
+import "../../../components/application/ApplicationList.css";
+import { Building2 } from "lucide-react";
 
 import { useSearchParams } from "react-router-dom";
 import Filter from "../../../components/filter/Filter";
 import useGetUserPropertiesQuery from "../../../hooks/properties/useGetUserPropertiesQuery";
 import UserPropertyCard from "../../../components/property/UserPropertyCard";
 import PropertyForm from "../../../components/property/PropertyForm";
+import Loader from "../../../components/common/Loader";
+import ErrorState from "../../../components/common/ErrorState";
+import EmptyState from "../../../components/common/EmptyState";
 
 import { useState } from "react";
-import { useCreatePropertyMutation } from "../../../hooks/properties/useCreatePropertyMutation";
-import { useUpdatePropertyMutation } from "../../../hooks/properties/useUpdatePropertyMutation";
 
 export default function UserPropertiesList() {
   const [currentEditProperty, setCurrentEditProperty] = useState({});
@@ -20,9 +22,6 @@ export default function UserPropertiesList() {
   const { userProperty, isLoading, isError, error } =
     useGetUserPropertiesQuery(params);
 
-  const { isLoading: createPropertyIsLoading } = useCreatePropertyMutation();
-  const { isLoading: updatePropertyIsUpdating } = useUpdatePropertyMutation();
-
   const editPropertyHandler = (property) => {
     setCurrentEditProperty(property);
     setShowPropertyForm(true);
@@ -33,44 +32,46 @@ export default function UserPropertiesList() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
-      </div>
-    );
+    return <Loader />;
   }
   if (isError) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-red-500">
-          <p>Error: {error.message}</p>
-        </div>
-      </div>
-    );
+    return <ErrorState message={error.message} />;
   }
   return (
     <div className="listPage">
       <div className="listContainer">
         <div className="listWrapper">
-          <Filter />
-          <div className="justify-end flex ">
+          <div className="list-header">
+            <div>
+              <h1 className="list-title">My Properties</h1>
+              <p className="list-subtitle">
+                Manage the properties you have listed.
+              </p>
+            </div>
             <PropertyForm
               open={showPropertyForm}
               onToggle={togglePropertyForm}
               currentEditProperty={currentEditProperty}
-              disabled={createPropertyIsLoading || updatePropertyIsUpdating}
             />
           </div>
-          {userProperty.map((property) => (
-            <UserPropertyCard
-              key={property._id}
-              userProperty={property}
-              onEdit={editPropertyHandler}
+          <Filter />
+          {!userProperty?.length ? (
+            <EmptyState
+              icon={Building2}
+              title="No properties yet"
+              message="Create your first listing so tenants can find and apply for it."
             />
-          ))}
+          ) : (
+            userProperty.map((property) => (
+              <UserPropertyCard
+                key={property._id}
+                userProperty={property}
+                onEdit={editPropertyHandler}
+              />
+            ))
+          )}
         </div>
       </div>
-      <div className="mapContainer"></div>
     </div>
   );
 }

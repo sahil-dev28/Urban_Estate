@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { MapPin, Pencil, Trash2 } from "lucide-react";
 
 import "../application/ApplicationCard.css";
-import location from "../../../src/assets/pin.png";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,98 +25,89 @@ function UserPropertyCard(props) {
 
   const deletePropertyHandler = () => {
     deleteUserProperty(userProperty._id);
-  };
-
-  const toggleDeleteAlert = () => {
-    setOpenDeleteAlert((prev) => !prev);
+    setOpenDeleteAlert(false);
   };
 
   return (
-    <div className="card">
+    <div className="app-card">
       <Link to={`/property/${userProperty?._id}`} className="imageContainer">
-        <img src={userProperty?.propertyImage} alt="" />
+        <img src={userProperty?.propertyImage} alt={userProperty?.name} />
       </Link>
       <div className="textContainer">
         <h2 className="title">
           <Link to={`/property/${userProperty._id}`}>{userProperty?.name}</Link>
         </h2>
         <div className="address">
-          <img src={location} alt="location" />
+          <MapPin className="h-4 w-4" />
           <span>{userProperty?.location}</span>
           <Badge
-            className={`badge ${
+            className={`ml-2 text-white capitalize ${
               userProperty.status === "open" ? "bg-green-600" : "bg-red-600"
             }`}
           >
             {userProperty?.status}
           </Badge>
-
-          <Badge variant="secondary" className="secondary-badge text-black">
+          <Badge variant="secondary" className="capitalize">
             {userProperty?.furnishStatus}
           </Badge>
         </div>
-        <div>
-          <p className="price">
-            {userProperty?.price
-              ? "₹ " + userProperty.price.toLocaleString("en-IN")
-              : "Price not mentioned"}
-          </p>
-        </div>
+        <p className="price">
+          {userProperty?.price
+            ? "₹ " + userProperty.price.toLocaleString("en-IN")
+            : "Price on request"}
+        </p>
 
         <div className="bottom">
-          <div className="features">
-            <div className="feature">
-              <Button
-                type="button"
-                variant="secondary"
-                className="w-full hover:scale-105 cursor-pointer"
-                onClick={() => onEdit(userProperty)}
-              >
-                Edit
-              </Button>
-            </div>
-            <div className="feature">
-              <Button
-                type="button"
-                className="cursor-pointer hover:scale-105 w-full"
-                variant="destructive"
-                onClick={toggleDeleteAlert}
-              >
-                Delete
-              </Button>
-              <AlertDialog open={openDeleteAlert}>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      this property and remove data from our servers.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <Button
-                      onClick={toggleDeleteAlert}
-                      className="cursor-pointer hover:scale-105"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={deletePropertyHandler}
-                      type="button"
-                      variant="destructive"
-                      className="cursor-pointer hover:scale-105"
-                    >
-                      Confirm
-                    </Button>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </div>
-          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="cursor-pointer hover:scale-105"
+            onClick={() => onEdit(userProperty)}
+          >
+            <Pencil className="h-4 w-4" />
+            Edit
+          </Button>
+          <Button
+            type="button"
+            variant="destructive"
+            className="cursor-pointer hover:scale-105"
+            onClick={() => setOpenDeleteAlert(true)}
+          >
+            <Trash2 className="h-4 w-4" />
+            Delete
+          </Button>
         </div>
       </div>
+
+      <AlertDialog open={openDeleteAlert} onOpenChange={setOpenDeleteAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete this
+              property and remove data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOpenDeleteAlert(false)}
+              className="cursor-pointer"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={deletePropertyHandler}
+              className="cursor-pointer"
+            >
+              Delete
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

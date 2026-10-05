@@ -1,42 +1,46 @@
 import "./ApplicationList.css";
+import { ClipboardList } from "lucide-react";
 
 import useGetUserApplication from "../../hooks/application/useGetUserApplication";
 import ApplicationCard from "./ApplicationCard";
-import Filter from "../filter/Filter";
-import Map from "../map/Map";
+import Loader from "../common/Loader";
+import ErrorState from "../common/ErrorState";
+import EmptyState from "../common/EmptyState";
 
 export default function ApplicationList() {
   const { application, isLoading, isError, error } = useGetUserApplication();
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
-      </div>
-    );
+    return <Loader />;
   }
   if (isError) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-red-500">
-          <p>Error: {error.message}</p>
-        </div>
-      </div>
-    );
+    return <ErrorState message={error.message} />;
   }
 
   return (
     <div className="listPage">
       <div className="listContainer">
         <div className="listWrapper">
-          <Filter />
-          {application.map((app) => (
-            <ApplicationCard key={app._id} application={app} />
-          ))}
+          <div className="list-header">
+            <div>
+              <h1 className="list-title">My Applications</h1>
+              <p className="list-subtitle">Properties you have applied for.</p>
+            </div>
+          </div>
+          {!application?.length ? (
+            <EmptyState
+              icon={ClipboardList}
+              title="No applications yet"
+              message="Browse properties and apply to the ones you like."
+              actionLabel="Browse properties"
+              actionTo="/property"
+            />
+          ) : (
+            application.map((app) => (
+              <ApplicationCard key={app._id} application={app} />
+            ))
+          )}
         </div>
-      </div>
-      <div className="mapContainer">
-        <Map />
       </div>
     </div>
   );

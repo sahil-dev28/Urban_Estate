@@ -6,7 +6,7 @@ import { enterUp, stagger } from "../lib/motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useAuthStore } from "../store/authStore";
-import { DEMO_ACCOUNT } from "../utils/default";
+import { DEMO_ACCOUNTS } from "../utils/default";
 
 const features = [
   {
@@ -44,7 +44,7 @@ export default function Home() {
           <div className={enterUp} style={stagger(3, 90)}>
             <SearchBar />
           </div>
-          {!isLoggedIn && DEMO_ACCOUNT && (
+          {!isLoggedIn && DEMO_ACCOUNTS.length > 0 && (
             <Link
               to="/auth/login"
               className={`home-demo-link ${enterUp}`}

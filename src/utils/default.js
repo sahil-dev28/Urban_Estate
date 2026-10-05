@@ -11,12 +11,26 @@ export const MAX_IMAGES = 5;
 
 export const UNITS = ["bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
-// Optional demo account so reviewers can explore without signing up.
-// Set VITE_DEMO_EMAIL and VITE_DEMO_PASSWORD in the deploy environment.
-export const DEMO_ACCOUNT =
-  import.meta.env.VITE_DEMO_EMAIL && import.meta.env.VITE_DEMO_PASSWORD
-    ? {
-        email: import.meta.env.VITE_DEMO_EMAIL,
-        password: import.meta.env.VITE_DEMO_PASSWORD,
-      }
-    : null;
+// Optional demo accounts so reviewers can explore without signing up.
+// Set VITE_DEMO_TENANT_* and VITE_DEMO_LANDLORD_* in the deploy environment;
+// an account is only offered when both its email and password are set.
+const env = import.meta.env;
+
+export const DEMO_ACCOUNTS = [
+  {
+    role: "tenant",
+    label: "Tenant",
+    hint: "Browse and apply",
+    email: env.VITE_DEMO_TENANT_EMAIL,
+    password: env.VITE_DEMO_TENANT_PASSWORD,
+    redirectTo: "/property",
+  },
+  {
+    role: "landlord",
+    label: "Landlord",
+    hint: "List and manage",
+    email: env.VITE_DEMO_LANDLORD_EMAIL,
+    password: env.VITE_DEMO_LANDLORD_PASSWORD,
+    redirectTo: "/property/my",
+  },
+].filter((account) => account.email && account.password);

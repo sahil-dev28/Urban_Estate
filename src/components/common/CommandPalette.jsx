@@ -28,7 +28,7 @@ import { useResolvedTheme } from "../../hooks/useResolvedTheme";
 import useProperties from "../../hooks/properties/useProperties";
 import { useLogoutUser } from "../../hooks/auth/userLogoutUser";
 import { useAuthStore } from "../../store/authStore";
-import { DEMO_ACCOUNT } from "../../utils/default";
+import { DEMO_ACCOUNTS } from "../../utils/default";
 
 function useDebouncedValue(value, delay) {
   const [debounced, setDebounced] = useState(value);
@@ -188,7 +188,7 @@ export default function CommandPalette({ open, onOpenChange }) {
             </CommandItem>
           ) : (
             <>
-              {DEMO_ACCOUNT && (
+              {DEMO_ACCOUNTS.length > 0 && (
                 <CommandItem onSelect={() => run(() => navigate("/auth/login"))}>
                   <Sparkles />
                   Try the demo account

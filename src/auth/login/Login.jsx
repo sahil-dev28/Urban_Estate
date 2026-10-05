@@ -20,8 +20,8 @@ import { useLoginUser } from "../../hooks/auth/useLogin";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "../../store/authStore";
 import Divider from "../../components/common/Divider";
-import { DEMO_ACCOUNT } from "../../utils/default";
-import { Sparkles } from "lucide-react";
+import { DEMO_ACCOUNTS } from "../../utils/default";
+import { Building2, KeyRound } from "lucide-react";
 
 const Login = () => {
   const { isPending, mutateAsync: loginUser } = useLoginUser();
@@ -48,7 +48,7 @@ const Login = () => {
     },
   });
 
-  const onSubmit = async (data) => {
+  const signIn = async (data, redirectTo) => {
     const loginData = {
       email: data.email,
       password: data.password,
@@ -65,17 +65,19 @@ const Login = () => {
       reset();
 
       navigate({
-        pathname: "/",
+        pathname: redirectTo,
       });
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
 
-  const loginAsDemo = () => {
-    setValue("email", DEMO_ACCOUNT.email);
-    setValue("password", DEMO_ACCOUNT.password);
-    onSubmit(DEMO_ACCOUNT);
+  const onSubmit = (data) => signIn(data, "/");
+
+  const loginAsDemo = (account) => {
+    setValue("email", account.email);
+    setValue("password", account.password);
+    signIn(account, account.redirectTo);
   };
 
   return (
@@ -87,24 +89,35 @@ const Login = () => {
             Enter your credentials to access your account.
           </CardDescription>
         </CardHeader>
-        {DEMO_ACCOUNT && (
-          <div className="mx-6 flex flex-col gap-3 rounded-lg border border-dashed border-[var(--brand)] bg-[var(--brand-soft)] p-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold">Just looking around?</p>
-              <p className="text-xs text-muted-foreground">
-                Explore with a ready-made demo account.
-              </p>
+        {DEMO_ACCOUNTS.length > 0 && (
+          <div className="mx-6 rounded-lg border border-dashed border-[var(--brand)] bg-[var(--brand-soft)] p-4">
+            <p className="text-sm font-semibold">Just looking around?</p>
+            <p className="text-xs text-muted-foreground">
+              Log in to a ready-made demo account in one click.
+            </p>
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              {DEMO_ACCOUNTS.map((account) => {
+                const Icon = account.role === "landlord" ? Building2 : KeyRound;
+                return (
+                  <Button
+                    key={account.role}
+                    type="button"
+                    variant="outline"
+                    className="h-auto cursor-pointer justify-start py-2"
+                    onClick={() => loginAsDemo(account)}
+                    disabled={isPending}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span className="flex flex-col items-start leading-tight">
+                      <span>Demo {account.label}</span>
+                      <span className="text-xs font-normal text-muted-foreground">
+                        {account.hint}
+                      </span>
+                    </span>
+                  </Button>
+                );
+              })}
             </div>
-            <Button
-              type="button"
-              variant="outline"
-              className="cursor-pointer"
-              onClick={loginAsDemo}
-              disabled={isPending}
-            >
-              <Sparkles className="h-4 w-4" />
-              Try the demo
-            </Button>
           </div>
         )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

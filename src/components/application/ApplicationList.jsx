@@ -10,6 +10,9 @@ import EmptyState from "../common/EmptyState";
 export default function ApplicationList() {
   const { application, isLoading, isError, error } = useGetUserApplication();
 
+  // Skip applications whose property was deleted by the landlord
+  const applications = application?.filter((app) => app.property) ?? [];
+
   if (isLoading) {
     return <Loader />;
   }
@@ -27,7 +30,7 @@ export default function ApplicationList() {
               <p className="list-subtitle">Properties you have applied for.</p>
             </div>
           </div>
-          {!application?.length ? (
+          {applications.length === 0 ? (
             <EmptyState
               icon={ClipboardList}
               title="No applications yet"
@@ -36,7 +39,7 @@ export default function ApplicationList() {
               actionTo="/property"
             />
           ) : (
-            application.map((app) => (
+            applications.map((app) => (
               <ApplicationCard key={app._id} application={app} />
             ))
           )}

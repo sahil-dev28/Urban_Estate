@@ -49,6 +49,7 @@ export default function PropertyPage() {
   }
 
   const applicationsCount = property.applications.length;
+  const landlord = property.landlord;
 
   return (
     <section className="property-page">
@@ -125,15 +126,15 @@ export default function PropertyPage() {
             <Avatar className="mx-auto h-24 w-24">
               <AvatarImage
                 className="object-cover"
-                src={property.landlord.profileImage}
-                alt={`@${property.landlord.name}`}
+                src={landlord?.profileImage}
+                alt={`@${landlord?.name ?? "owner"}`}
               />
               <AvatarFallback className="bg-[var(--cream)] text-3xl">
-                {property.landlord.name.charAt().toUpperCase()}
+                {landlord?.name.charAt().toUpperCase() ?? "?"}
               </AvatarFallback>
             </Avatar>
             <CardTitle className="mt-3 text-lg">
-              {property.landlord.name}
+              {landlord?.name ?? "Owner unavailable"}
             </CardTitle>
             <CardDescription>Property Owner</CardDescription>
             {property.owned && (
@@ -142,19 +143,23 @@ export default function PropertyPage() {
           </CardHeader>
 
           <CardContent className="space-y-3">
-            <a
-              href={`mailto:${property.landlord.email}`}
-              className="property-contact"
-            >
-              <Mail className="h-4 w-4 shrink-0" />
-              <span>{property.landlord.email}</span>
-            </a>
+            {landlord ? (
+              <a href={`mailto:${landlord.email}`} className="property-contact">
+                <Mail className="h-4 w-4 shrink-0" />
+                <span>{landlord.email}</span>
+              </a>
+            ) : (
+              <p className="text-center text-sm text-muted-foreground">
+                The owner's account no longer exists, so this listing can't
+                take new applications.
+              </p>
+            )}
             <p className="text-center text-sm text-muted-foreground">
               {`${applicationsCount} tenant${applicationsCount !== 1 ? "s" : ""} applied`}
             </p>
           </CardContent>
 
-          {!property.owned && (
+          {!property.owned && landlord && (
             <CardFooter>
               <BookPropertyButton />
             </CardFooter>

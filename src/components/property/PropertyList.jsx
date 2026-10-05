@@ -4,7 +4,7 @@ import useProperties from "../../hooks/properties/useProperties";
 import Filter from "../filter/Filter";
 import PropertyCard from "./PropertyCard";
 import { SearchX } from "lucide-react";
-import Loader from "../common/Loader";
+import PropertyCardSkeleton from "./PropertyCardSkeleton";
 import ErrorState from "../common/ErrorState";
 import EmptyState from "../common/EmptyState";
 
@@ -29,7 +29,16 @@ export default function PropertyList() {
   };
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div>
+        <Filter />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+          {Array.from({ length: PAGE_SIZE }, (_, i) => (
+            <PropertyCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
   }
   if (isError) {
     return <ErrorState message={error.message} />;

@@ -6,7 +6,7 @@ import Filter from "../../../components/filter/Filter";
 import useGetUserPropertiesQuery from "../../../hooks/properties/useGetUserPropertiesQuery";
 import UserPropertyCard from "../../../components/property/UserPropertyCard";
 import PropertyForm from "../../../components/property/PropertyForm";
-import Loader from "../../../components/common/Loader";
+import ListRowSkeleton from "../../../components/common/ListRowSkeleton";
 import ErrorState from "../../../components/common/ErrorState";
 import EmptyState from "../../../components/common/EmptyState";
 
@@ -32,7 +32,15 @@ export default function UserPropertiesList() {
   };
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div className="listPage">
+        <div className="listWrapper">
+          {Array.from({ length: 3 }, (_, i) => (
+            <ListRowSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
   }
   if (isError) {
     return <ErrorState message={error.message} />;

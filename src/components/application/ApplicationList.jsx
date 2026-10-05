@@ -3,7 +3,7 @@ import { ClipboardList } from "lucide-react";
 
 import useGetUserApplication from "../../hooks/application/useGetUserApplication";
 import ApplicationCard from "./ApplicationCard";
-import Loader from "../common/Loader";
+import ListRowSkeleton from "../common/ListRowSkeleton";
 import ErrorState from "../common/ErrorState";
 import EmptyState from "../common/EmptyState";
 
@@ -14,7 +14,15 @@ export default function ApplicationList() {
   const applications = application?.filter((app) => app.property) ?? [];
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div className="listPage">
+        <div className="listWrapper">
+          {Array.from({ length: 3 }, (_, i) => (
+            <ListRowSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
   }
   if (isError) {
     return <ErrorState message={error.message} />;

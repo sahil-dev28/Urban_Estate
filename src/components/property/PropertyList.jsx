@@ -3,6 +3,10 @@ import ReactPaginate from "react-paginate";
 import useProperties from "../../hooks/properties/useProperties";
 import Filter from "../filter/Filter";
 import PropertyCard from "./PropertyCard";
+import { SearchX } from "lucide-react";
+import Loader from "../common/Loader";
+import ErrorState from "../common/ErrorState";
+import EmptyState from "../common/EmptyState";
 
 const PAGE_SIZE = 8;
 
@@ -25,20 +29,10 @@ export default function PropertyList() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
-      </div>
-    );
+    return <Loader />;
   }
   if (isError) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-red-500">
-          <p>Error: {error.message}</p>
-        </div>
-      </div>
-    );
+    return <ErrorState message={error.message} />;
   }
 
   return (
@@ -46,17 +40,23 @@ export default function PropertyList() {
       <Filter />
 
       {property.length === 0 ? (
-        <p className="text-center text-gray-500 mt-10">
-          No properties found.
-        </p>
+        <div className="mt-6">
+          <EmptyState
+            icon={SearchX}
+            title="No properties found"
+            message="Try a different city or widen your price range."
+            actionLabel="Clear filters"
+            actionTo="/property"
+          />
+        </div>
       ) : (
         <div
-          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-3.5 transition-opacity ${
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6 transition-opacity ${
             isFetching ? "opacity-60" : "opacity-100"
           }`}
         >
           {property.map((property) => (
-            <PropertyCard key={property.id} property={property} />
+            <PropertyCard key={property._id} property={property} />
           ))}
         </div>
       )}
@@ -77,7 +77,7 @@ export default function PropertyList() {
           previousLinkClassName={linkClass}
           nextLinkClassName={linkClass}
           breakLinkClassName={linkClass}
-          activeLinkClassName="!border-blue-600 !bg-blue-600 !text-white hover:!bg-blue-600"
+          activeLinkClassName="!border-[var(--brand)] !bg-[var(--brand)] !text-black hover:!bg-[var(--brand-hover)]"
           disabledLinkClassName="opacity-40 pointer-events-none"
         />
       )}

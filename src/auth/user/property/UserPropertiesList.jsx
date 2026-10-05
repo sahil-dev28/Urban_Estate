@@ -10,18 +10,31 @@ import PropertyForm from "../../../components/property/PropertyForm";
 import ListRowSkeleton from "../../../components/common/ListRowSkeleton";
 import ErrorState from "../../../components/common/ErrorState";
 import EmptyState from "../../../components/common/EmptyState";
+import Pagination from "../../../components/common/Pagination";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const PAGE_SIZE = 6;
 
 export default function UserPropertiesList() {
   const [currentEditProperty, setCurrentEditProperty] = useState({});
   const [showPropertyForm, setShowPropertyForm] = useState(false);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
+  const pageNumber = Number(searchParams.get("pageNumber")) || 1;
 
-  const { userProperty, isLoading, isError, error } =
-    useGetUserPropertiesQuery(params);
+  const { userProperty, totalPages, isLoading, isError, error } =
+    useGetUserPropertiesQuery({ ...params, pageNumber, pageSize: PAGE_SIZE });
+
+  // Deleting the last listing on the last page leaves us past the end; step back
+  useEffect(() => {
+    if (totalPages > 0 && pageNumber > totalPages) {
+      const next = new URLSearchParams(searchParams);
+      next.set("pageNumber", String(totalPages));
+      setSearchParams(next, { replace: true });
+    }
+  }, [pageNumber, totalPages, searchParams, setSearchParams]);
 
   const editPropertyHandler = (property) => {
     setCurrentEditProperty(property);
@@ -84,6 +97,7 @@ export default function UserPropertiesList() {
               </div>
             ))
           )}
+          <Pagination totalPages={totalPages} />
         </div>
       </div>
     </div>

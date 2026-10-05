@@ -30,7 +30,7 @@ export default function useDeleteUserProperty() {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries(["userProperties"]);
+      queryClient.invalidateQueries({ queryKey: ["user-property"] });
     },
   });
 }

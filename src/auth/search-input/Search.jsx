@@ -64,20 +64,13 @@ import { useNavigate } from "react-router-dom";
 import "./Search.css";
 import { Search } from "lucide-react";
 
-const types = ["buy", "rent"];
-
 export default function SearchBar() {
   const navigate = useNavigate();
   const [query, setQuery] = useState({
-    type: "buy",
     search: "",
     minPrice: "",
     maxPrice: "",
   });
-
-  const switchType = (value) => {
-    setQuery((prev) => ({ ...prev, type: value }));
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -91,8 +84,7 @@ export default function SearchBar() {
     e.preventDefault();
     const params = new URLSearchParams(
       Object.fromEntries(
-        Object.entries({ search: query.search, minPrice: query.minPrice, maxPrice: query.maxPrice })
-          .filter(([, v]) => v !== ""),
+        Object.entries(query).filter(([, v]) => v !== ""),
       ),
     ).toString();
     navigate(`/property${params ? `?${params}` : ""}`);
@@ -100,20 +92,6 @@ export default function SearchBar() {
 
   return (
     <div className="searchBar">
-      {/* Type Switch */}
-      <div className="type">
-        {types.map((type) => (
-          <button
-            key={type}
-            type="button"
-            onClick={() => switchType(type)}
-            className={`type-btn ${query.type === type ? "active" : ""}`}
-          >
-            {type}
-          </button>
-        ))}
-      </div>
-
       {/* Form */}
       <form className="search-form" onSubmit={handleSubmit}>
         <input
@@ -128,6 +106,7 @@ export default function SearchBar() {
           type="number"
           name="minPrice"
           placeholder="Min Price"
+          min={0}
           value={query.minPrice}
           onChange={handleChange}
         />
@@ -136,12 +115,14 @@ export default function SearchBar() {
           type="number"
           name="maxPrice"
           placeholder="Max Price"
+          min={0}
           value={query.maxPrice}
           onChange={handleChange}
         />
 
-        <button type="submit" className="search-btn">
+        <button type="submit" className="search-submit">
           <Search size={18} />
+          <span>Search</span>
         </button>
       </form>
     </div>

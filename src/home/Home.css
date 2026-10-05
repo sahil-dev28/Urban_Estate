@@ -1,39 +1,83 @@
 .home-page {
   display: flex;
-  height: 100%;
-}
-
-h1.title {
-  font-size: 64px;
-  font-weight: 500;
+  min-height: calc(100vh - 100px);
 }
 
 .text-container {
   flex: 3;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 56px;
+  padding-right: 80px;
+  padding-bottom: 40px;
 }
 
 .wrapper {
-  padding-right: 100px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 50px;
-  height: 100%;
+  gap: 24px;
 }
 
-.boxes {
-  padding-right: 100px;
-}
-
-.boxes h1 {
-  font-size: 36px;
+.home-tag {
+  width: max-content;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background-color: var(--brand-soft);
+  font-size: 13px;
   font-weight: 600;
 }
 
-.boxes h2 {
-  font-size: 20px;
-  font-weight: 300;
+.home-title {
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.home-title span {
+  background: linear-gradient(transparent 60%, var(--brand) 60%);
+}
+
+.home-subtitle {
+  max-width: 560px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--muted-text);
+}
+
+.boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.box-icon {
+  width: 28px;
+  height: 28px;
+  padding: 8px;
+  box-sizing: content-box;
+  border-radius: 12px;
+  background-color: var(--cream);
+  margin-bottom: 6px;
+}
+
+.box h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.box p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-text);
 }
 
 .image-container {
@@ -41,6 +85,7 @@ h1.title {
   display: flex;
   align-items: center;
   position: relative;
+  background-color: var(--cream);
 }
 
 .image-container img {
@@ -50,15 +95,11 @@ h1.title {
 }
 
 @media (max-width: 1024px) {
-  h1.title {
-    font-size: 48px;
+  .home-title {
+    font-size: 46px;
   }
 
-  .wrapper {
-    padding-right: 40px;
-  }
-
-  .boxes {
+  .text-container {
     padding-right: 40px;
   }
 }
@@ -66,39 +107,35 @@ h1.title {
 @media (max-width: 768px) {
   .home-page {
     flex-direction: column;
-    height: auto;
-    gap: 24px;
+    min-height: auto;
+    gap: 32px;
   }
 
-  h1.title {
+  .text-container {
+    padding-right: 0;
+    padding-top: 16px;
+    padding-bottom: 0;
+    gap: 32px;
+  }
+
+  .home-title {
     font-size: 34px;
   }
 
-  .wrapper {
-    padding-right: 0;
-    gap: 24px;
-    height: auto;
-    padding-top: 24px;
+  .home-subtitle {
+    font-size: 15px;
   }
 
   .boxes {
-    padding-right: 0;
-    flex-wrap: wrap;
+    grid-template-columns: 1fr;
     gap: 16px;
-  }
-
-  .boxes h1 {
-    font-size: 28px;
-  }
-
-  .boxes h2 {
-    font-size: 16px;
   }
 
   .image-container {
     flex: none;
     width: 100%;
     justify-content: center;
+    border-radius: 16px;
   }
 
   .image-container img {

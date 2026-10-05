@@ -2,6 +2,7 @@ import bg from "./../assets/bg.png";
 import "./Home.css";
 import SearchBar from "./../auth/search-input/Search";
 import { BadgeCheck, CalendarCheck, ClipboardList } from "lucide-react";
+import { enterUp, stagger } from "../lib/motion";
 
 const features = [
   {
@@ -26,22 +27,28 @@ export default function Home() {
     <div className="home-page">
       <div className="text-container">
         <div className="wrapper">
-          <span className="home-tag">Rent smarter in your city</span>
-          <h1 className="home-title">
+          <span className={`home-tag ${enterUp}`} style={stagger(0, 90)}>Rent smarter in your city</span>
+          <h1 className={`home-title ${enterUp}`} style={stagger(1, 90)}>
             Find Real Estate & Get Your <span>Dream Place</span>
           </h1>
-          <p className="home-subtitle">
+          <p className={`home-subtitle ${enterUp}`} style={stagger(2, 90)}>
             Browse open properties, compare prices and furnishing, and apply
             directly to landlords - all in one place.
           </p>
-          <SearchBar />
+          <div className={enterUp} style={stagger(3, 90)}>
+            <SearchBar />
+          </div>
         </div>
 
         <div className="boxes">
-          {features.map((feature) => {
+          {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <div className="box" key={feature.title}>
+              <div
+                className={`box ${enterUp}`}
+                style={stagger(index + 4, 90)}
+                key={feature.title}
+              >
                 <Icon className="box-icon" />
                 <h3>{feature.title}</h3>
                 <p>{feature.text}</p>
@@ -51,7 +58,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="image-container">
+      <div className="image-container motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-700">
         <img src={bg} alt="City buildings" />
       </div>
     </div>

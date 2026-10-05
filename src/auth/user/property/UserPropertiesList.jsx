@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import Filter from "../../../components/filter/Filter";
 import useGetUserPropertiesQuery from "../../../hooks/properties/useGetUserPropertiesQuery";
 import UserPropertyCard from "../../../components/property/UserPropertyCard";
+import { enterUp, stagger } from "../../../lib/motion";
 import PropertyForm from "../../../components/property/PropertyForm";
 import ListRowSkeleton from "../../../components/common/ListRowSkeleton";
 import ErrorState from "../../../components/common/ErrorState";
@@ -70,12 +71,17 @@ export default function UserPropertiesList() {
               message="Create your first listing so tenants can find and apply for it."
             />
           ) : (
-            userProperty.map((property) => (
-              <UserPropertyCard
+            userProperty.map((property, index) => (
+              <div
                 key={property._id}
-                userProperty={property}
-                onEdit={editPropertyHandler}
-              />
+                className={enterUp}
+                style={stagger(index, 70)}
+              >
+                <UserPropertyCard
+                  userProperty={property}
+                  onEdit={editPropertyHandler}
+                />
+              </div>
             ))
           )}
         </div>

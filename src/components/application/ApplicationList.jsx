@@ -3,6 +3,7 @@ import { ClipboardList } from "lucide-react";
 
 import useGetUserApplication from "../../hooks/application/useGetUserApplication";
 import ApplicationCard from "./ApplicationCard";
+import { enterUp, stagger } from "../../lib/motion";
 import ListRowSkeleton from "../common/ListRowSkeleton";
 import ErrorState from "../common/ErrorState";
 import EmptyState from "../common/EmptyState";
@@ -47,8 +48,10 @@ export default function ApplicationList() {
               actionTo="/property"
             />
           ) : (
-            applications.map((app) => (
-              <ApplicationCard key={app._id} application={app} />
+            applications.map((app, index) => (
+              <div key={app._id} className={enterUp} style={stagger(index, 70)}>
+                <ApplicationCard application={app} />
+              </div>
             ))
           )}
         </div>

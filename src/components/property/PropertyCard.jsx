@@ -4,10 +4,15 @@ import { MapPin, Ruler } from "lucide-react";
 
 import { Link } from "react-router";
 import "./PropertyCard.css";
+import { enterUp, stagger } from "../../lib/motion";
 
-function PropertyCard({ property }) {
+function PropertyCard({ property, index = 0 }) {
   return (
-    <Link to={`/property/${property._id}`} className="property-card-link">
+    <Link
+      to={`/property/${property._id}`}
+      className={`property-card-link ${enterUp}`}
+      style={stagger(index)}
+    >
       <Card className="property-card h-full gap-0 overflow-hidden py-0">
         <div className="property-card-image">
           <img src={property.propertyImage} alt={property.name} />

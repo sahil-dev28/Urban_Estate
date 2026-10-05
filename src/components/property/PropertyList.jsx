@@ -64,8 +64,8 @@ export default function PropertyList() {
             isFetching ? "opacity-60" : "opacity-100"
           }`}
         >
-          {property.map((property) => (
-            <PropertyCard key={property._id} property={property} />
+          {property.map((property, index) => (
+            <PropertyCard key={property._id} property={property} index={index} />
           ))}
         </div>
       )}

@@ -106,7 +106,7 @@ function ForgetPassword() {
         <p className="text-center text-sm">
           <Link
             to="/auth/login"
-            className="font-semibold text-black underline-offset-4 hover:underline"
+            className="font-semibold text-foreground underline-offset-4 hover:underline"
           >
             Go back to Login
           </Link>

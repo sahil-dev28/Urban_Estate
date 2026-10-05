@@ -54,12 +54,12 @@ const ResetPassword = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full max-w-md p-6 bg-white rounded-xl border shadow-lg"
+          className="w-full max-w-md p-6 bg-card rounded-xl border shadow-lg"
         >
           <h1 className="flex items-center justify-center text-2xl font-bold mb-4">
             Reset Password
           </h1>
-          <p className="text-center text-sm text-gray-600 mb-2">
+          <p className="text-center text-sm text-muted-foreground mb-2">
             Enter the code from your email and choose a new password.
           </p>
           {!email && (

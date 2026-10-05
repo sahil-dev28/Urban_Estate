@@ -100,7 +100,7 @@ const Login = () => {
                 <Label htmlFor="password">Password</Label>
                 <Link
                   to="/auth/forgot-password"
-                  className="text-sm text-gray-600 underline-offset-4 hover:underline"
+                  className="text-sm text-muted-foreground underline-offset-4 hover:underline"
                 >
                   Forgot Password?
                 </Link>
@@ -130,11 +130,11 @@ const Login = () => {
 
             <Divider />
 
-            <p className="text-center text-sm text-gray-600">
+            <p className="text-center text-sm text-muted-foreground">
               Don't have an account?{" "}
               <Link
                 to="/auth/register"
-                className="font-semibold text-black underline-offset-4 hover:underline"
+                className="font-semibold text-foreground underline-offset-4 hover:underline"
               >
                 Sign Up
               </Link>

@@ -10,6 +10,17 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <script>
+      try {
+        var theme = localStorage.getItem("vite-ui-theme") || "system";
+        if (theme === "system") {
+          theme = matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+        document.documentElement.classList.add(theme);
+      } catch (e) {}
+    </script>
     <title>UrbanEstate - Find Your Dream Place</title>
   </head>
   <body>

@@ -154,11 +154,11 @@ const RegisterForm = () => {
               <div className="mt-5 w-full">
                 <Divider />
               </div>
-              <p className="mt-5 text-center text-sm text-gray-600">
+              <p className="mt-5 text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
                 <Link
                   to="/auth/login"
-                  className="font-semibold text-black underline-offset-4 hover:underline"
+                  className="font-semibold text-foreground underline-offset-4 hover:underline"
                 >
                   Log in
                 </Link>

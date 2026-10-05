@@ -3,8 +3,11 @@ import Navbar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import "./Layout.css";
 import { Outlet } from "react-router";
+import { useResolvedTheme } from "../../hooks/useResolvedTheme";
 
 export default function Layout() {
+  const theme = useResolvedTheme();
+
   return (
     <div className="layout">
       <div className="header">
@@ -14,7 +17,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <Footer />
-      <Toaster richColors />
+      <Toaster richColors theme={theme} />
     </div>
   );
 }

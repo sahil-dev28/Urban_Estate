@@ -11,7 +11,7 @@ import EmptyState from "../common/EmptyState";
 const PAGE_SIZE = 8;
 
 const linkClass =
-  "flex h-9 min-w-9 items-center justify-center rounded-md border border-gray-200 px-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 cursor-pointer";
+  "flex h-9 min-w-9 items-center justify-center rounded-md border border-border px-3 text-sm font-medium text-foreground transition-colors hover:bg-background cursor-pointer";
 
 export default function PropertyList() {
   const [searchParams, setSearchParams] = useSearchParams();

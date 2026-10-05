@@ -2,8 +2,8 @@
   display: flex;
   gap: 24px;
   padding: 16px;
-  background-color: #fff;
-  border: 1px solid #eee;
+  background-color: var(--card);
+  border: 1px solid var(--border);
   border-radius: 16px;
   transition: box-shadow 0.25s ease;
 
@@ -42,7 +42,7 @@
     .title {
       font-size: 20px;
       font-weight: 600;
-      color: #333;
+      color: var(--foreground);
       overflow-wrap: anywhere;
       transition: color 0.2s ease;
 

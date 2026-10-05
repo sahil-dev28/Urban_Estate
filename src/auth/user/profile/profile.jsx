@@ -86,11 +86,11 @@ const ProfilePage = () => {
   };
 
   return (
-    <section className="flex items-center justify-center h-screen bg-gray-100">
+    <section className="flex items-center justify-center h-screen bg-background">
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="p-6 bg-white rounded-lg shadow-md w-full max-w-[350px] md:max-w-[450px]"
+          className="p-6 bg-card rounded-lg shadow-md w-full max-w-[350px] md:max-w-[450px]"
         >
           <h1 className="flex items-center justify-between text-2xl mb-6 font-bold">
             My Profile
@@ -153,7 +153,7 @@ const ProfilePage = () => {
           </Button>
           <div className="relative mt-4 text-center">
             <span className="absolute inset-0 flex items-center justify-center ">
-              <span className="w-full px-30 bg-white text-sm text-gray-600  border-t align-middle ">
+              <span className="w-full px-30 bg-card text-sm text-muted-foreground  border-t align-middle ">
                 OR
               </span>
             </span>

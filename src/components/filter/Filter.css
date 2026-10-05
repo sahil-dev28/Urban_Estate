@@ -1,6 +1,6 @@
 .filter {
-  background: #fff;
-  border: 1px solid #eee;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 16px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
   padding: 20px 24px;
@@ -42,10 +42,10 @@
   height: 40px;
   min-width: 120px;
   padding: 0 10px;
-  border: 1.5px solid #e5e5e5;
+  border: 1.5px solid var(--border);
   border-radius: 8px;
   font-size: 13px;
-  background: #fafafa;
+  background: var(--muted);
   transition: border-color 0.2s, background 0.2s;
 }
 
@@ -59,13 +59,13 @@
 .filter-item input:focus,
 .filter-item select:focus {
   border-color: var(--ink);
-  background: #fff;
+  background: var(--card);
   outline: none;
 }
 
 .filter-divider {
   height: 1px;
-  background: #f0f0f0;
+  background: var(--border);
 }
 
 .filter-bottom {
@@ -80,7 +80,7 @@
   padding: 0 18px;
   border: none;
   background: var(--brand);
-  color: var(--ink);
+  color: var(--brand-ink);
   font-weight: 600;
   font-size: 14px;
   border-radius: 8px;

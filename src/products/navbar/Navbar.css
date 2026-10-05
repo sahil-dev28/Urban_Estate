@@ -19,7 +19,7 @@ nav {
   border: none;
   cursor: pointer;
   padding: 6px;
-  color: #000;
+  color: var(--foreground);
 }
 
 .nav-links {
@@ -39,7 +39,7 @@ nav {
 
 .nav-link {
   position: relative;
-  color: #555;
+  color: var(--muted-text);
   font-weight: 500;
   transition: color 0.2s ease;
 }
@@ -95,13 +95,13 @@ nav {
 }
 
 .right .login:hover {
-  background-color: #fff;
+  background-color: var(--card);
 }
 
 .right .register,
 .profile-link {
   background-color: var(--brand);
-  color: var(--ink);
+  color: var(--brand-ink);
   font-weight: 600;
 }
 
@@ -123,7 +123,7 @@ nav {
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #fff;
+  border: 2px solid var(--card);
 }
 
 /* ---------- Mobile ---------- */

@@ -149,7 +149,7 @@ export default function PropertyPage() {
               <Mail className="h-4 w-4 shrink-0" />
               <span>{property.landlord.email}</span>
             </a>
-            <p className="text-center text-sm text-gray-500">
+            <p className="text-center text-sm text-muted-foreground">
               {`${applicationsCount} tenant${applicationsCount !== 1 ? "s" : ""} applied`}
             </p>
           </CardContent>

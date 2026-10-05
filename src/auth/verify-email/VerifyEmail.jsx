@@ -52,10 +52,10 @@ const VerifyEmail = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full max-w-md mx-auto p-6 bg-white rounded-xl border shadow-lg"
+          className="w-full max-w-md mx-auto p-6 bg-card rounded-xl border shadow-lg"
         >
           <h1 className="text-2xl font-bold mb-4">Verify Your Email</h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-muted-foreground mb-6">
             Please enter your {`${!email ? "email and the" : ""}`} verification
             code sent to your email address.
           </p>
@@ -101,10 +101,10 @@ const VerifyEmail = () => {
           <div className="mt-6">
             <Divider />
           </div>
-          <p className="mt-6 text-center text-sm text-gray-600">
+          <p className="mt-6 text-center text-sm text-muted-foreground">
             <Link
               to="/auth/register"
-              className="font-semibold text-black underline-offset-4 hover:underline"
+              className="font-semibold text-foreground underline-offset-4 hover:underline"
             >
               Go back to Sign Up
             </Link>

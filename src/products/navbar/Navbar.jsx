@@ -6,6 +6,7 @@ import { useShowMeQuery } from "../../hooks/user/useShowMeQuery";
 import { useAuthStore } from "../../store/authStore";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "../../components/common/ThemeToggle";
 
 export default function Navbar() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -23,7 +24,7 @@ export default function Navbar() {
     <nav>
       <div className="nav-bar">
         <Link to="/" className="logo" onClick={closeMenu}>
-          <img src={logo} alt="logo" />
+          <img src={logo} className="brand-logo" alt="logo" />
           <span>UrbanEstate</span>
         </Link>
         <button
@@ -71,6 +72,7 @@ export default function Navbar() {
         </div>
         {isLoggedIn ? (
           <div className="right">
+            <ThemeToggle />
             <div className="user">
               <img src={data?.profileImage || profile} alt={data?.name} />
               <span className="user-info">{data?.name}</span>
@@ -81,6 +83,7 @@ export default function Navbar() {
           </div>
         ) : (
           <div className="right">
+            <ThemeToggle />
             <Link to="/auth/login" className="login" onClick={closeMenu}>
               Login
             </Link>

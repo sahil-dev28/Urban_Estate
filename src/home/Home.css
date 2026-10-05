@@ -24,6 +24,7 @@
   padding: 6px 14px;
   border-radius: 999px;
   background-color: var(--brand-soft);
+  color: var(--ink);
   font-size: 13px;
   font-weight: 600;
 }
@@ -38,6 +39,11 @@
 
 .home-title span {
   background: linear-gradient(transparent 60%, var(--brand) 60%);
+}
+
+.dark .home-title span {
+  background: none;
+  color: var(--brand);
 }
 
 .home-subtitle {

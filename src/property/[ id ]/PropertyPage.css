@@ -108,7 +108,7 @@
 }
 
 .property-description {
-  color: #555;
+  color: var(--muted-text);
   line-height: 1.7;
   white-space: pre-line;
 }
@@ -123,7 +123,7 @@
   justify-content: center;
   gap: 8px;
   padding: 10px;
-  border: 1px solid #eee;
+  border: 1px solid var(--border);
   border-radius: 10px;
   font-size: 14px;
   overflow-wrap: anywhere;

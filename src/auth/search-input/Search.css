@@ -64,8 +64,8 @@
   display: flex;
   gap: 8px;
   padding: 8px;
-  background: #fff;
-  border: 1px solid #eee;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
 }
@@ -77,7 +77,7 @@
   padding: 0 14px;
   border: 1px solid transparent;
   border-radius: 10px;
-  background: #fafafa;
+  background: var(--muted);
   font-size: 14px;
   transition: border-color 0.2s, background 0.2s;
 }
@@ -89,7 +89,7 @@
 .search-form input:focus {
   outline: none;
   border-color: var(--ink);
-  background: #fff;
+  background: var(--card);
 }
 
 .search-submit {
@@ -102,7 +102,7 @@
   border: none;
   border-radius: 10px;
   background: var(--brand);
-  color: var(--ink);
+  color: var(--brand-ink);
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;

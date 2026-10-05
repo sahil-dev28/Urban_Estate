@@ -30,12 +30,12 @@ function PropertyCard({ property }) {
             </Badge>
           </div>
 
-          <p className="flex items-center gap-1 text-sm text-gray-500 capitalize">
+          <p className="flex items-center gap-1 text-sm text-muted-foreground capitalize">
             <MapPin className="h-4 w-4 shrink-0" />
             <span className="line-clamp-1">{property.location}</span>
           </p>
 
-          <p className="line-clamp-2 text-sm text-gray-500">
+          <p className="line-clamp-2 text-sm text-muted-foreground">
             {property.description}
           </p>
 
@@ -45,7 +45,7 @@ function PropertyCard({ property }) {
                 ? "₹ " + property.price.toLocaleString("en-IN")
                 : "Price on request"}
             </span>
-            <span className="flex items-center gap-1 text-sm text-gray-500">
+            <span className="flex items-center gap-1 text-sm text-muted-foreground">
               <Ruler className="h-4 w-4" />
               {property.carpetArea ? `${property.carpetArea} sq.ft.` : "—"}
             </span>

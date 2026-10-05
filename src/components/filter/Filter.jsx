@@ -34,7 +34,8 @@ function Filter() {
     }));
   };
 
-  const handleFilter = () => {
+  const handleFilter = (e) => {
+    e.preventDefault();
     const cleanedQuery = Object.fromEntries(
       Object.entries(query).filter(([, value]) => value !== ""),
     );
@@ -42,15 +43,15 @@ function Filter() {
   };
 
   return (
-    <div className="filter">
+    <form className="filter" onSubmit={handleFilter}>
       <h1>
         Search results for{" "}
         <b>{searchParams.get("search") || "all locations"}</b>
       </h1>
 
       {/* Top Search */}
-      <div className="top">
-        <div className="item full">
+      <div className="filter-top">
+        <div className="filter-item full">
           <label>Search</label>
           <input
             type="text"
@@ -65,8 +66,8 @@ function Filter() {
       <div className="filter-divider" />
 
       {/* Filters */}
-      <div className="bottom">
-        <div className="item">
+      <div className="filter-bottom">
+        <div className="filter-item">
           <label>Furniture</label>
           <select
             name="furnishStatus"
@@ -79,7 +80,7 @@ function Filter() {
           </select>
         </div>
 
-        <div className="item">
+        <div className="filter-item">
           <label>Status</label>
           <select name="status" value={query.status} onChange={handleChange}>
             <option value="">Any</option>
@@ -88,7 +89,7 @@ function Filter() {
           </select>
         </div>
 
-        <div className="item">
+        <div className="filter-item">
           <label>Min Price</label>
           <input
             type="number"
@@ -99,7 +100,7 @@ function Filter() {
           />
         </div>
 
-        <div className="item">
+        <div className="filter-item">
           <label>Max Price</label>
           <input
             type="number"
@@ -110,7 +111,7 @@ function Filter() {
           />
         </div>
 
-        <div className="item">
+        <div className="filter-item">
           <label>Sort By</label>
           <select name="sort" value={query.sort} onChange={handleChange}>
             <option value="">Default</option>
@@ -121,11 +122,12 @@ function Filter() {
           </select>
         </div>
 
-        <button className="search-btn" onClick={handleFilter}>
+        <button type="submit" className="filter-btn" aria-label="Apply filters">
           <Search size={18} />
+          <span>Search</span>
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 

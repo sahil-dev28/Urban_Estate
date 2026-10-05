@@ -5,13 +5,17 @@ import profile from "../../assets/noavatar.jpg";
 import { useShowMeQuery } from "../../hooks/user/useShowMeQuery";
 import { useAuthStore } from "../../store/authStore";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import ThemeToggle from "../../components/common/ThemeToggle";
+import CommandPalette, {
+  shortcutLabel,
+} from "../../components/common/CommandPalette";
 
 export default function Navbar() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const role = useAuthStore((state) => state.role);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
 
   const { data } = useShowMeQuery();
 
@@ -20,8 +24,27 @@ export default function Navbar() {
   const navLinkClass = ({ isActive }) =>
     isActive ? "nav-link active" : "nav-link";
 
+  const openPalette = () => {
+    closeMenu();
+    setPaletteOpen(true);
+  };
+
+  const searchButton = (
+    <button
+      type="button"
+      onClick={openPalette}
+      aria-label="Open search"
+      className="search-trigger"
+    >
+      <Search size={16} />
+      <span className="search-trigger-text">Search…</span>
+      <kbd>{shortcutLabel}</kbd>
+    </button>
+  );
+
   return (
     <nav>
+      <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
       <div className="nav-bar">
         <Link to="/" className="logo" onClick={closeMenu}>
           <img src={logo} className="brand-logo" alt="logo" />
@@ -72,6 +95,7 @@ export default function Navbar() {
         </div>
         {isLoggedIn ? (
           <div className="right">
+            {searchButton}
             <ThemeToggle />
             <div className="user">
               <img src={data?.profileImage || profile} alt={data?.name} />
@@ -83,6 +107,7 @@ export default function Navbar() {
           </div>
         ) : (
           <div className="right">
+            {searchButton}
             <ThemeToggle />
             <Link to="/auth/login" className="login" onClick={closeMenu}>
               Login

@@ -2,7 +2,7 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 
 import api from "../../api/axios-instance";
 
-export default function useProperties(params = {}) {
+export default function useProperties(params = {}, { enabled = true } = {}) {
   const { data, isLoading, isFetching, isError, error } = useQuery({
     queryKey: ["properties", params],
     queryFn: async () => {
@@ -13,6 +13,7 @@ export default function useProperties(params = {}) {
     // Keep showing the current page while the next one loads (no flash/empty state).
     placeholderData: keepPreviousData,
     staleTime: 1000 * 60 * 5, // 5 minutes
+    enabled,
   });
 
   return {

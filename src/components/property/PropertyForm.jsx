@@ -2,7 +2,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { propertyValidationSchema } from "../../schemas/index";
 
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -43,10 +43,13 @@ const DEFAULT_VALUES = {
 function PropertyForm(props) {
   const { open, onToggle, currentEditProperty } = props;
 
-  const { mutateAsync: createProperty, isLoading: createPropertyIsLoading } =
+  const { mutateAsync: createProperty, isPending: createPropertyIsPending } =
     useCreatePropertyMutation();
-  const { mutateAsync: updateProperty, isLoading: updatePropertyIsUpdating } =
+  const { mutateAsync: updateProperty, isPending: updatePropertyIsPending } =
     useUpdatePropertyMutation();
+
+  const isEditMode = !!currentEditProperty._id;
+  const isSaving = createPropertyIsPending || updatePropertyIsPending;
 
   const {
     register,
@@ -86,7 +89,6 @@ function PropertyForm(props) {
   }, [currentEditProperty, reset]);
 
   const onSubmit = async (data) => {
-    const isEditMode = !!currentEditProperty._id;
     const formData = new FormData();
     const propertyDetails = structuredClone(data);
 
@@ -129,24 +131,31 @@ function PropertyForm(props) {
 
       return;
     } else {
-      createProperty(formData);
-      console.log("Property created:");
+      createProperty(formData)
+        .then(() => {
+          reset();
+          onToggle(false);
+        })
+        .catch((error) => {
+          console.error("Error creating property:", error);
+        });
     }
-    reset();
-    onToggle(false);
   };
-
-  console.log(DEFAULT_VALUES.propertyImage);
 
   return (
     <Dialog open={open} onOpenChange={onToggle}>
       <DialogTrigger asChild>
-        <Button variant="outline">Create New Property</Button>
+        <Button className="cursor-pointer hover:scale-105">
+          <Plus className="h-4 w-4" />
+          Create New Property
+        </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Property Information</DialogTitle>
+          <DialogTitle>
+            {isEditMode ? "Edit Property" : "Add New Property"}
+          </DialogTitle>
         </DialogHeader>
 
         <form className="space-y-4 py-2 pb-4" onSubmit={handleSubmit(onSubmit)}>
@@ -289,15 +298,12 @@ function PropertyForm(props) {
 
           <DialogFooter>
             <Button
-              disabled={createPropertyIsLoading || updatePropertyIsUpdating}
+              disabled={isSaving}
               type="submit"
-              className="cursor-pointer"
+              className="cursor-pointer hover:scale-105"
             >
-              {createPropertyIsLoading ||
-                (updatePropertyIsUpdating && (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ))}
-              Submit
+              {isSaving && <Loader2 className="h-4 w-4 animate-spin" />}
+              {isEditMode ? "Save Changes" : "Create Property"}
             </Button>
           </DialogFooter>
         </form>

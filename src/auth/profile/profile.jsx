@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { profileSchema } from "../../schemas/index";
 import { useForm } from "react-hook-form";
@@ -21,7 +21,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import Divider from "../../components/common/Divider";
 import { Input } from "@/components/ui/input";
 
 const ProfilePage = () => {
@@ -32,6 +41,7 @@ const ProfilePage = () => {
   const { mutate: logoutUser } = useLogoutUser();
 
   const navigate = useNavigate();
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(profileSchema),
@@ -82,11 +92,11 @@ const ProfilePage = () => {
   };
 
   return (
-    <section className="flex items-center justify-center h-screen bg-gray-100">
+    <section className="flex items-center justify-center min-h-[calc(100vh-100px)] py-10">
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="p-6 bg-white rounded-lg shadow-md w-full max-w-[350px] md:max-w-[450px]"
+          className="w-full max-w-[350px] md:max-w-[450px] p-6 bg-white rounded-xl border shadow-lg"
         >
           <h1 className="flex items-center justify-between text-2xl mb-6 font-bold">
             My Profile
@@ -94,13 +104,23 @@ const ProfilePage = () => {
               <Badge variant="outline" className="capitalize">
                 {user?.role || "user"}
               </Badge>
-              <Badge className="bg-green-600 hover:bg-green-600 capitalize">
+              <Badge
+                className={`text-white capitalize ${
+                  user?.verified ? "bg-green-600" : "bg-gray-400"
+                }`}
+              >
                 {user?.verified ? "Verified" : "Not verified"}
               </Badge>
             </span>
           </h1>
-          <Avatar className="w-32 h-32 relative m-auto">
-            <AvatarImage src={pp} />
+          <Avatar className="w-28 h-28 m-auto mb-6 border-4 border-[var(--cream)]">
+            <AvatarImage
+              className="object-cover"
+              src={user?.profileImage || pp}
+            />
+            <AvatarFallback>
+              {user?.name?.charAt(0).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
 
           <FormField
@@ -132,37 +152,62 @@ const ProfilePage = () => {
 
           <Button
             type="submit"
-            className="mt-4 bg-[#fccf5d] text-black rounded-md cursor-pointer w-full hover:scale-105"
-            variant="solid"
+            className="mt-2 w-full h-10 cursor-pointer hover:scale-105"
             disabled={isSubmitting}
           >
             Update Profile
           </Button>
           <Button
             type="button"
-            className="mt-4 mb-4 border-red-500 text-red-500 rounded-md cursor-pointer w-full hover:scale-105"
+            className="mt-3 mb-6 w-full h-10 cursor-pointer hover:scale-105"
             variant="outline"
             onClick={logoutHandler}
             disabled={isSubmitting}
           >
             Logout
           </Button>
-          <div className="relative mt-4 text-center">
-            <span className="absolute inset-0 flex items-center justify-center ">
-              <span className="w-full px-30 bg-white text-sm text-gray-600  border-t align-middle ">
-                OR
-              </span>
-            </span>
-          </div>
+
+          <Divider text="DANGER ZONE" />
+
           <Button
             type="button"
-            className="mt-6 text-white rounded-md cursor-pointer w-full hover:scale-105"
+            className="mt-6 w-full h-10 text-white cursor-pointer hover:scale-105"
             variant="destructive"
-            onClick={deleteHandler}
+            onClick={() => setOpenDeleteAlert(true)}
             disabled={isSubmitting}
           >
             Delete Account
           </Button>
+
+          <AlertDialog open={openDeleteAlert} onOpenChange={setOpenDeleteAlert}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete your account?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. Your account and all your data
+                  will be permanently removed.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setOpenDeleteAlert(false)}
+                  className="cursor-pointer"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  variant="destructive"
+                  onClick={deleteHandler}
+                  className="cursor-pointer"
+                >
+                  Delete Account
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </form>
       </Form>
     </section>

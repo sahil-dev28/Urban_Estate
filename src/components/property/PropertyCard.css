@@ -13,7 +13,8 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.property-card-link:hover .property-card {
+.property-card-link:hover .property-card,
+.property-card-link.is-highlighted .property-card {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
@@ -48,4 +49,8 @@
   background-color: var(--brand-soft);
   font-size: 15px;
   font-weight: 600;
+}
+
+.property-card-link.is-highlighted .property-card {
+  border-color: var(--brand);
 }

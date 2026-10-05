@@ -6,12 +6,16 @@ import { Link } from "react-router";
 import "./PropertyCard.css";
 import { enterUp, stagger } from "../../lib/motion";
 
-function PropertyCard({ property, index = 0 }) {
+function PropertyCard({ property, index = 0, highlighted, onHover }) {
   return (
     <Link
       to={`/property/${property._id}`}
-      className={`property-card-link ${enterUp}`}
+      className={`property-card-link ${enterUp} ${
+        highlighted ? "is-highlighted" : ""
+      }`}
       style={stagger(index)}
+      onMouseEnter={() => onHover?.(property._id)}
+      onMouseLeave={() => onHover?.(null)}
     >
       <Card className="property-card h-full gap-0 overflow-hidden py-0">
         <div className="property-card-image">

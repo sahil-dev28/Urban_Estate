@@ -20,6 +20,8 @@ import { useLoginUser } from "../../hooks/auth/useLogin";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "../../store/authStore";
 import Divider from "../../components/common/Divider";
+import { DEMO_ACCOUNT } from "../../utils/default";
+import { Sparkles } from "lucide-react";
 
 const Login = () => {
   const { isPending, mutateAsync: loginUser } = useLoginUser();
@@ -35,6 +37,7 @@ const Login = () => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(loginSchema),
@@ -69,6 +72,12 @@ const Login = () => {
     }
   };
 
+  const loginAsDemo = () => {
+    setValue("email", DEMO_ACCOUNT.email);
+    setValue("password", DEMO_ACCOUNT.password);
+    onSubmit(DEMO_ACCOUNT);
+  };
+
   return (
     <section className="flex items-center justify-center min-h-[calc(100vh-100px)] py-10">
       <Card className="w-full max-w-md p-6 shadow-lg">
@@ -78,6 +87,26 @@ const Login = () => {
             Enter your credentials to access your account.
           </CardDescription>
         </CardHeader>
+        {DEMO_ACCOUNT && (
+          <div className="mx-6 flex flex-col gap-3 rounded-lg border border-dashed border-[var(--brand)] bg-[var(--brand-soft)] p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-semibold">Just looking around?</p>
+              <p className="text-xs text-muted-foreground">
+                Explore with a ready-made demo account.
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              className="cursor-pointer"
+              onClick={loginAsDemo}
+              disabled={isPending}
+            >
+              <Sparkles className="h-4 w-4" />
+              Try the demo
+            </Button>
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <CardContent className="space-y-4">
             <div className="space-y-2">

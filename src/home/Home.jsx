@@ -3,6 +3,10 @@ import "./Home.css";
 import SearchBar from "./../auth/search-input/Search";
 import { BadgeCheck, CalendarCheck, ClipboardList } from "lucide-react";
 import { enterUp, stagger } from "../lib/motion";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { useAuthStore } from "../store/authStore";
+import { DEMO_ACCOUNT } from "../utils/default";
 
 const features = [
   {
@@ -23,6 +27,8 @@ const features = [
 ];
 
 export default function Home() {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
   return (
     <div className="home-page">
       <div className="text-container">
@@ -38,6 +44,16 @@ export default function Home() {
           <div className={enterUp} style={stagger(3, 90)}>
             <SearchBar />
           </div>
+          {!isLoggedIn && DEMO_ACCOUNT && (
+            <Link
+              to="/auth/login"
+              className={`home-demo-link ${enterUp}`}
+              style={stagger(4, 90)}
+            >
+              Recruiter or reviewer? Try the live demo
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          )}
         </div>
 
         <div className="boxes">
@@ -46,7 +62,7 @@ export default function Home() {
             return (
               <div
                 className={`box ${enterUp}`}
-                style={stagger(index + 4, 90)}
+                style={stagger(index + 5, 90)}
                 key={feature.title}
               >
                 <Icon className="box-icon" />
